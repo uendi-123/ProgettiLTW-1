@@ -15,47 +15,76 @@
         <!-- Bootstrap -->
         <link href="../bootstrap-5.0.0-dist/css/bootstrap.css" rel="stylesheet">
         <script src="../bootstrap-5.0.0-dist/js/bootstrap.bundle.js"></script>
+        <!-- DataPicker -->
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ab-datepicker@latest/css/datepicker.css" type="text/css" /> -->
+        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ab-datepicker@latest"></script> -->
+        <!-- <script type="text/javascript" src="../ab-datepicker-2.1.20/js/locales/it.min.js"></script>
+        <script type="text/javascript" src="../ab-datepicker-2.1.20/js/datepicker.js"></script> -->
+        <!-- JQuery Google CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
+        <script src="main.js"></script>
     </head>
     <body class="bg-dark">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark myNav">
             <div class="container-fluid">
-              <a class="navbar-brand h1 logo" href="index.html">RentACar.com</a>
-              <!-- <a class="navbar-brand logo border border-dark" href="#">
-                  <img src="../img/logo2.png" alt="" width="100" height="100">
-              </a> -->
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <a class="navbar-brand h1 logo" href="index.html">RentACar.com</a>
+                <!-- <a class="navbar-brand logo border border-dark" href="#">
+                    <img src="../img/logo2.png" alt="" width="100" height="100">
+                </a> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
                     </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                  </li>
-                </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-              </div>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
             </div>
-          </nav>
+        </nav>
+
+        <div class="container-lg searchDiv mt-4 px-3 pb-3 pt-3">
+            <form>
+                <div class="row mb-2">
+                    <p class="h3 text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
+                </div>
+                <div class="row mb-3">
+                    <label>EVITARE RESIZING QUANDO TROPPO PICCOLO</label>
+                    <div class="col-lg pe-1">
+                        <input type="text" class="form-control" placeholder="Inserisci Citta">
+                    </div>
+                    <div class="col-lg ps-1">
+                        <input type="text" class="form-control" placeholder="Da Completare, CALENDARIO">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg btn-group-lg">
+                        <button class="btn btn-primary" type="button">Cerca</button>
+                        <button class="btn btn-danger" type="reset">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </body>
 </html>
