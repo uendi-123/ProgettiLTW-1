@@ -1,0 +1,13 @@
+.logo{
+    padding: 0;
+    padding-bottom: 3px;
+    margin: 0;
+    margin-right: 30px; 
+}
+.logo:hover{
+    background-color: white;
+}
+
+nav.myNav{
+    border-bottom: 1px solid white;
+}
