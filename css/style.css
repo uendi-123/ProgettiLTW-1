@@ -15,6 +15,18 @@ div.searchDiv{
     background-color: rgb(56, 60, 64);
     margin: auto;
     min-width: 500px;
-    width: 40%;
-    height: 50%;
+
+    border: 1px white solid;
+    border-radius: 5px;
+}
+
+div.newsletterDiv{
+    background-color: rgb(56, 60, 64);
+    min-width: 400px;
+    border-radius: 5px;
+    padding: 12px;
+}
+
+.btnToSpread{
+    width: 100%;
 }

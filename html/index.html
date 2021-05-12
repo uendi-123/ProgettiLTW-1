@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- <meta charset="UTF-8"> -->
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RentACar.com</title>
@@ -12,22 +12,26 @@
         <!-- Compiled and minified JavaScript -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 
-        <!-- JQuery Google CDN --> 
-        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-        <!-- Bootstrap -->
+        <!-- Bootstrap
         <link href="../bootstrap-5.0.0-dist/css/bootstrap.css" rel="stylesheet">
-        <script src="../bootstrap-5.0.0-dist/js/bootstrap.bundle.js"></script>
-        <!-- DataPicker -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ab-datepicker@latest/css/datepicker.css" type="text/css" />
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ab-datepicker@latest"></script>
-        <script type="text/javascript" src="../ab-datepicker-2.1.20/js/locales/it.min.js"></script>
-        <script type="text/javascript" src="../ab-datepicker-2.1.20/js/datepicker.js"></script>
+        <script src="../bootstrap-5.0.0-dist/js/bootstrap.bundle.js"></script> -->
+        
+        <!-- JS Files -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+
+        <!-- CSS Files -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />        
+        
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
         <script src="../js/main.js"></script>
     </head>
     <body class="bg-dark">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark myNav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark myNav">
             <div class="container-fluid">
                 <a class="navbar-brand h1 logo" href="index.html">RentACar.com</a>
                 <!-- <a class="navbar-brand logo border border-dark" href="#">
@@ -64,66 +68,71 @@
             </div>
         </nav>
 
-        <div class="container searchDiv mt-4 px-3 pb-3 pt-3">
-            <form>
-                <div class="h2 row mb-2">
-                    <p class="text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
-                </div>
-                <div class="row mb-3">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Inserisci Citta">
+        <div class="row mx-lg-2">
+            <div class="col"></div>
+            <div class="col-6 container searchDiv mt-4 px-3 pb-3 pt-3">
+                <form>
+                    <div class="h2 row mb-2">
+                        <p class="text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <div class="input-group">
-                            <!-- <div class="input-group-text">
-                                Immagine Calendario per l'input field
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                </svg>
-                            </div> -->
-                            <input class="date form-control" id="date1" type="text" placeholder="Da quando?" title="format: dd/MM/y"/>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Inserisci Citta">
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="input-group">
-                            <input class="date form-control" id="date1" type="text" placeholder="A quando?" title="format: dd/MM/y"/>
-                            <div class="input-group-text">
-                                <!-- Immagine Calendario per l'input field -->
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar calendarIcon" viewBox="0 0 16 16">
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                </svg> -->
+                    <div class="row mb-1">
+                        <div class='col-5'>
+                            <div class="input-group mb-3">
+                                <input id="dateStart" type="text" class="form-control" placeholder="Data inizio noleggio" aria-label="Data inizio noleggio" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconStart">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    </svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    $(document).ready(function() {
-                        $('.date').datepicker({
-                            firstDayOfWeek: 1, // The first day of week is Monday
-                            weekDayFormat: 'narrow', // Only first letter for the weekday names
-                            inputFormat: 'd/M/y',
-                            outputFormat: 'dd/MM/y',
-                            titleFormat: 'EEEE d MMMM y',
-                            markup: 'bootstrap4',
-                            theme: 'blue',
-                            modal: false
-                        });
-                        $('calendarIcon').click(function() {
-                            $(".date").focus();
-                        });
-                    });
-                </script>
-                <div class="row mb-3">
-                    <div class="col-lg btn-group-lg">
-                        <button class="btn btn-primary" type="button">Cerca</button>
-                        <button class="btn btn-danger" type="reset">Reset</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </body>
-
     
+                        <div class='col-5'>
+                            <div class="input-group mb-3">
+                                <input id="dateEnd" type="text" class="form-control date" placeholder="Data fine noleggio" aria-label="Data fine noleggio" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconEnd">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-success btnToSpread" type="button">Cerca</button>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $("#dateStart").datepicker();
+                            $('#calendarIconStart').click(function(){
+                                $("#dateStart").focus();
+                            });
+    
+                            $("#dateEnd").datepicker({ dateFormat: 'dd-mm-yy' });
+                            $('#calendarIconEnd').click(function(){
+                                $("#dateEnd").focus();
+                            });
+                        });
+                    </script>
+                </form>
+            </div>
+            <div class="col col-sm container border border-success mt-4 ms-1 newsletterDiv text-center">
+                <h2 class="mb-4 textbreak text-light">Rimani Aggiornato!</h1>
+                <label for="inputNewsletter " class="textbreaak fw-light text-light">Inserisci la tua mail per iscriverti alla newsletter di RentACar.com!</p>
+                <div class="input-group" id="inputNewsletter">
+                    <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
+                </div>
+            </div>
+        </div>
+    </body>    
 </html>
