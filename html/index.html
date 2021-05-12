@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <!-- <meta charset="UTF-8"> -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RentACar.com</title>
@@ -12,22 +12,22 @@
         <!-- Compiled and minified JavaScript -->
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 
+        <!-- JQuery Google CDN --> 
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
         <!-- Bootstrap -->
         <link href="../bootstrap-5.0.0-dist/css/bootstrap.css" rel="stylesheet">
         <script src="../bootstrap-5.0.0-dist/js/bootstrap.bundle.js"></script>
         <!-- DataPicker -->
-        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ab-datepicker@latest/css/datepicker.css" type="text/css" /> -->
-        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ab-datepicker@latest"></script> -->
-        <!-- <script type="text/javascript" src="../ab-datepicker-2.1.20/js/locales/it.min.js"></script>
-        <script type="text/javascript" src="../ab-datepicker-2.1.20/js/datepicker.js"></script> -->
-        <!-- JQuery Google CDN -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ab-datepicker@latest/css/datepicker.css" type="text/css" />
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ab-datepicker@latest"></script>
+        <script type="text/javascript" src="../ab-datepicker-2.1.20/js/locales/it.min.js"></script>
+        <script type="text/javascript" src="../ab-datepicker-2.1.20/js/datepicker.js"></script>
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
-        <script src="main.js"></script>
+        <script src="../js/main.js"></script>
     </head>
     <body class="bg-dark">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark myNav">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark myNav">
             <div class="container-fluid">
                 <a class="navbar-brand h1 logo" href="index.html">RentACar.com</a>
                 <!-- <a class="navbar-brand logo border border-dark" href="#">
@@ -64,20 +64,57 @@
             </div>
         </nav>
 
-        <div class="container-lg searchDiv mt-4 px-3 pb-3 pt-3">
+        <div class="container searchDiv mt-4 px-3 pb-3 pt-3">
             <form>
-                <div class="row mb-2">
-                    <p class="h3 text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
+                <div class="h2 row mb-2">
+                    <p class="text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
                 </div>
                 <div class="row mb-3">
-                    <label>EVITARE RESIZING QUANDO TROPPO PICCOLO</label>
-                    <div class="col-lg pe-1">
+                    <div class="col">
                         <input type="text" class="form-control" placeholder="Inserisci Citta">
                     </div>
-                    <div class="col-lg ps-1">
-                        <input type="text" class="form-control" placeholder="Da Completare, CALENDARIO">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <!-- <div class="input-group-text">
+                                Immagine Calendario per l'input field
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                </svg>
+                            </div> -->
+                            <input class="date form-control" id="date1" type="text" placeholder="Da quando?" title="format: dd/MM/y"/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <input class="date form-control" id="date1" type="text" placeholder="A quando?" title="format: dd/MM/y"/>
+                            <div class="input-group-text">
+                                <!-- Immagine Calendario per l'input field -->
+                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar calendarIcon" viewBox="0 0 16 16">
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                </svg> -->
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $('.date').datepicker({
+                            firstDayOfWeek: 1, // The first day of week is Monday
+                            weekDayFormat: 'narrow', // Only first letter for the weekday names
+                            inputFormat: 'd/M/y',
+                            outputFormat: 'dd/MM/y',
+                            titleFormat: 'EEEE d MMMM y',
+                            markup: 'bootstrap4',
+                            theme: 'blue',
+                            modal: false
+                        });
+                        $('calendarIcon').click(function() {
+                            $(".date").focus();
+                        });
+                    });
+                </script>
                 <div class="row mb-3">
                     <div class="col-lg btn-group-lg">
                         <button class="btn btn-primary" type="button">Cerca</button>
@@ -87,4 +124,6 @@
             </form>
         </div>
     </body>
+
+    
 </html>
