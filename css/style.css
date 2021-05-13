@@ -1,5 +1,5 @@
 /* line 3, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body logo {
+logo {
   padding: 0;
   padding-bottom: 3px;
   margin: 0;
@@ -8,13 +8,13 @@ body logo {
 }
 
 /* line 11, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body nav myNav {
-  border-bottom: 1px solid;
+nav.myNav {
+  border-bottom: 1px solid white;
 }
 
 /* line 15, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body div searchDiv {
-  background-color: #dc3545;
+div.searchDiv {
+  background-color: inherit;
   margin: auto;
   /* min-width: 500px */
   width: 100%;
@@ -23,42 +23,42 @@ body div searchDiv {
 }
 
 /* line 23, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body div newsletterDiv {
-  background-color: #dc3545;
+div.newsletterDiv {
+  background-color: inherit;
   min-width: 400px;
   border-radius: 5px;
   padding: 12px;
 }
 
 /* line 29, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body btnToSpread {
+.btnToSpread {
   width: 100%;
 }
 
 /* line 32, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body rowCards {
+.rowCards {
   height: 14em;
 }
 
 /* line 35, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body colSleep {
+.colSleep {
   background-color: inherit;
 }
 
 /* line 39, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body activeCard {
+.activeCard {
   background-color: #0d6efd;
 }
 
 /* line 43, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body centerTextCardSpan {
+.centerTextCardSpan {
   font-size: 2em;
   margin: auto;
   border-bottom: 2px white solid;
 }
 
 /* line 48, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-body activeSpanCard {
+.activeSpanCard {
   font-size: 2em;
   margin: auto;
   border-bottom: 5px red solid;
