@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "style.css",
+	"sources": [
+		"../scss/style.scss"
+	],
+	"sourcesContent": [
+		"html, body{\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.logo{\r\n    padding: 0;\r\n    padding-bottom: 3px;\r\n    margin: 0;\r\n    margin-left: 30px;\r\n    margin-right: 30px; \r\n}\r\n.logo:hover{\r\n    color: red;\r\n}\r\nnav.myNav{\r\n    border-bottom: 1px solid white;\r\n}\r\ndiv.searchDiv{\r\n    background-color: rgb(56, 60, 64);\r\n    margin: auto;\r\n    /* min-width: 500px; */\r\n    width: 100%;\r\n    border: 1px white solid;\r\n    border-radius: 5px;\r\n}\r\n\r\ndiv.newsletterDiv{\r\n    background-color: rgb(56, 60, 64);\r\n    min-width: 400px;\r\n    border-radius: 5px;\r\n    padding: 12px;\r\n}\r\n\r\n.btnToSpread{\r\n    width: 100%;\r\n}\r\n.rowCards{\r\n    height: 14em;\r\n}\r\n\r\n.colSleep{\r\n    background-color: inherit;\r\n}\r\n\r\n// .activeCard{\r\n//     background-color: $bg-primary;\r\n// }\r\n\r\n.centerTextCardSpan{\r\n    font-size: 2em;\r\n    margin: auto;\r\n    border-bottom: 2px white solid;\r\n}\r\n.activeSpanCard{\r\n    font-size: 2em;\r\n    margin: auto;\r\n    border-bottom: 5px red solid;\r\n}"
+	],
+	"names": [],
+	"mappings": ";AAAA,AAAA,IAAI,EAAE,IAAI,CAAA;EACN,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACf;;;AAED,AAAA,KAAK,CAAA;EACD,OAAO,EAAE,CAAC;EACV,cAAc,EAAE,GAAG;EACnB,MAAM,EAAE,CAAC;EACT,WAAW,EAAE,IAAI;EACjB,YAAY,EAAE,IAAI;CACrB;;;AACD,AAAA,KAAK,AAAA,MAAM,CAAA;EACP,KAAK,EAAE,GAAG;CACb;;;AACD,AAAA,GAAG,AAAA,MAAM,CAAA;EACL,aAAa,EAAE,eAAe;CACjC;;;AACD,AAAA,GAAG,AAAA,UAAU,CAAA;EACT,gBAAgB,EAAE,OAAe;EACjC,MAAM,EAAE,IAAI;EACZ,uBAAuB;EACvB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,eAAe;EACvB,aAAa,EAAE,GAAG;CACrB;;;AAED,AAAA,GAAG,AAAA,cAAc,CAAA;EACb,gBAAgB,EAAE,OAAe;EACjC,SAAS,EAAE,KAAK;EAChB,aAAa,EAAE,GAAG;EAClB,OAAO,EAAE,IAAI;CAChB;;;AAED,AAAA,YAAY,CAAA;EACR,KAAK,EAAE,IAAI;CACd;;;AACD,AAAA,SAAS,CAAA;EACL,MAAM,EAAE,IAAI;CACf;;;AAED,AAAA,SAAS,CAAA;EACL,gBAAgB,EAAE,OAAO;CAC5B;;;AAMD,AAAA,mBAAmB,CAAA;EACf,SAAS,EAAE,GAAG;EACd,MAAM,EAAE,IAAI;EACZ,aAAa,EAAE,eAAe;CACjC;;;AACD,AAAA,eAAe,CAAA;EACX,SAAS,EAAE,GAAG;EACd,MAAM,EAAE,IAAI;EACZ,aAAa,EAAE,aAAa;CAC/B"
+}

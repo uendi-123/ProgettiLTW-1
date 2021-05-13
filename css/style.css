@@ -1,32 +1,73 @@
-.logo{
-    padding: 0;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-left: 30px;
-    margin-right: 30px; 
-}
-.logo:hover{
-    color: red;
-}
-nav.myNav{
-    border-bottom: 1px solid white;
-}
-div.searchDiv{
-    background-color: rgb(56, 60, 64);
-    margin: auto;
-    min-width: 500px;
-
-    border: 1px white solid;
-    border-radius: 5px;
+/* line 1, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+html, body {
+  width: 100%;
+  height: 100%;
 }
 
-div.newsletterDiv{
-    background-color: rgb(56, 60, 64);
-    min-width: 400px;
-    border-radius: 5px;
-    padding: 12px;
+/* line 6, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.logo {
+  padding: 0;
+  padding-bottom: 3px;
+  margin: 0;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
-.btnToSpread{
-    width: 100%;
+/* line 13, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.logo:hover {
+  color: red;
 }
+
+/* line 16, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+nav.myNav {
+  border-bottom: 1px solid white;
+}
+
+/* line 19, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+div.searchDiv {
+  background-color: #383c40;
+  margin: auto;
+  /* min-width: 500px; */
+  width: 100%;
+  border: 1px white solid;
+  border-radius: 5px;
+}
+
+/* line 28, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+div.newsletterDiv {
+  background-color: #383c40;
+  min-width: 400px;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+/* line 35, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.btnToSpread {
+  width: 100%;
+}
+
+/* line 38, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.rowCards {
+  height: 14em;
+}
+
+/* line 42, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.colSleep {
+  background-color: inherit;
+}
+
+/* line 50, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.centerTextCardSpan {
+  font-size: 2em;
+  margin: auto;
+  border-bottom: 2px white solid;
+}
+
+/* line 55, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.scss */
+.activeSpanCard {
+  font-size: 2em;
+  margin: auto;
+  border-bottom: 5px red solid;
+}
+
+/*# sourceMappingURL=style.css.map */
