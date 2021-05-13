@@ -46,12 +46,15 @@ div.newsletterDiv {
 }
 
 /* line 39, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
+.normalCard {
+  background-color: inherit;
+}
 .activeCard {
-  background-color: #0d6efd;
+  background-color: white;
 }
 
 /* line 43, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
-.centerTextCardSpan {
+.normalSpanCard {
   font-size: 2em;
   margin: auto;
   border-bottom: 2px white solid;
@@ -60,8 +63,11 @@ div.newsletterDiv {
 /* line 48, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
 .activeSpanCard {
   font-size: 2em;
+  color: red;
   margin: auto;
   border-bottom: 5px red solid;
 }
-
+.dinamicDiv{
+  background-color: inherit;
+}
 /*# sourceMappingURL=style.css.map */
