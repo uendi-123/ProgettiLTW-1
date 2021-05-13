@@ -1,54 +1,51 @@
-logo
-    padding: 0;
-    padding-bottom: 3px;
-    margin: 0;
-    margin-left: 30px;
-    margin-right: 30px; 
+@import "../bootstrap/scss/bootstrap.scss";
+body
+    logo
+        padding: 0
+        padding-bottom: 3px
+        margin: 0
+        margin-left: 30px
+        margin-right: 30px
 
-.logo:hover{
-    color: red;
-}
-nav.myNav{
-    border-bottom: 1px solid white;
-}
-div.searchDiv{
-    background-color: rgb(56, 60, 64);
-    margin: auto;
-    /* min-width: 500px; */
-    width: 100%;
-    border: 1px white solid;
-    border-radius: 5px;
-}
+    nav
+        myNav
+            border-bottom: 1px solid
 
-div.newsletterDiv{
-    background-color: rgb(56, 60, 64);
-    min-width: 400px;
-    border-radius: 5px;
-    padding: 12px;
-}
+    div
+        searchDiv
+            background-color: $red
+            margin: auto
+            /* min-width: 500px */
+            width: 100%
+            border: 1px white solid
+            border-radius: 5px
 
-.btnToSpread{
-    width: 100%;
-}
-.rowCards{
-    height: 14em;
-}
+        newsletterDiv
+            background-color: $red
+            min-width: 400px
+            border-radius: 5px
+            padding: 12px    
 
-.colSleep{
-    background-color: inherit;
-}
+    btnToSpread
+        width: 100%
 
-// .activeCard{
-//     background-color: $bg-primary;
-// }
+    rowCards
+        height: 14em
 
-.centerTextCardSpan{
-    font-size: 2em;
-    margin: auto;
-    border-bottom: 2px white solid;
-}
-.activeSpanCard{
-    font-size: 2em;
-    margin: auto;
-    border-bottom: 5px red solid;
-}
+    colSleep
+        background-color: inherit
+
+
+    activeCard
+        background-color: $primary
+
+
+    centerTextCardSpan
+        font-size: 2em
+        margin: auto
+        border-bottom: 2px white solid
+
+    activeSpanCard
+        font-size: 2em
+        margin: auto
+        border-bottom: 5px red solid
