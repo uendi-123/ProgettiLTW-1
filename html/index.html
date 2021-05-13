@@ -33,6 +33,7 @@
         <script src="../js/main.js"></script>
     </head>
     <body class="bg-dark">
+        <!-- NavBar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark myNav">
             <div class="container-fluid">
                 <a class="navbar-brand h1 logo" href="index.html">RentACar.com</a>
@@ -70,70 +71,87 @@
             </div>
         </nav>
 
-        <div class="row mx-lg-2">
-            <div class="col"></div>
-            <div class="col-6 container searchDiv mt-4 px-3 pb-3 pt-3">
-                <form>
-                    <div class="h2 row mb-2">
-                        <p class="text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Inserisci Citta">
+        <div class="container">
+            <!-- Box Ricerca -->
+            <div class="row mx-lg-1 mx-md-1">
+                <div class="col-6 container searchDiv mt-4 px-3 pb-3 pt-3">
+                    <form>
+                        <div class="h2 row mb-2">
+                            <p class="text-center text-light">Noleggiami! <br> Tutto piu semplice con RentACar.com</p>
                         </div>
-                    </div>
-                    <div class="row mb-1">
-                        <div class='col-5'>
-                            <div class="input-group mb-3">
-                                <input id="dateStart" type="text" class="form-control" placeholder="Data inizio noleggio" aria-label="Data inizio noleggio" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconStart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                    </svg>
-                                    </button>
-                                </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="Inserisci Citta">
                             </div>
                         </div>
-    
-                        <div class='col-5'>
-                            <div class="input-group mb-3">
-                                <input id="dateEnd" type="text" class="form-control date" placeholder="Data fine noleggio" aria-label="Data fine noleggio" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconEnd">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                    </svg>
-                                    </button>
+                        <div class="row mb-1">
+                            <div class='col-5'>
+                                <div class="input-group mb-3">
+                                    <input id="dateStart" type="text" class="form-control" placeholder="Data inizio noleggio" aria-label="Data inizio noleggio" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconStart">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+        
+                            <div class='col-5'>
+                                <div class="input-group mb-3">
+                                    <input id="dateEnd" type="text" class="form-control date" placeholder="Data fine noleggio" aria-label="Data fine noleggio" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconEnd">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-success btnToSpread" type="button">Cerca</button>
+                            </div>
                         </div>
-                        <div class="col">
-                            <button class="btn btn-success btnToSpread" type="button">Cerca</button>
-                        </div>
-                    </div>
-                    <script type="text/javascript">
-                        $(document).ready(function() {
-                            $("#dateStart").datepicker();
-                            $('#calendarIconStart').click(function(){
-                                $("#dateStart").focus();
+                        <script type="text/javascript">
+                            $(document).ready(function() {
+                                $("#dateStart").datepicker();
+                                $('#calendarIconStart').click(function(){
+                                    $("#dateStart").focus();
+                                });
+        
+                                $("#dateEnd").datepicker({ dateFormat: 'dd-mm-yy' });
+                                $('#calendarIconEnd').click(function(){
+                                    $("#dateEnd").focus();
+                                });
                             });
-    
-                            $("#dateEnd").datepicker({ dateFormat: 'dd-mm-yy' });
-                            $('#calendarIconEnd').click(function(){
-                                $("#dateEnd").focus();
-                            });
-                        });
-                    </script>
-                </form>
-            </div>
-            <div class="col col-sm container border border-success mt-4 ms-1 newsletterDiv text-center">
-                <h2 class="mb-4 textbreak text-light">Rimani Aggiornato!</h1>
-                <label for="inputNewsletter " class="textbreaak fw-light text-light">Inserisci la tua mail per iscriverti alla newsletter di RentACar.com!</p>
-                <div class="input-group" id="inputNewsletter">
-                    <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
+                        </script>
+                    </form>
                 </div>
+            </div>
+            <!-- Box 3 Cose AJAX -->
+            <div class="row rowCards text-danger mt-2 px-0 mx-lg-1 mx-md-1 justify-content-lg-center justify-content-md-center">
+                <div class="col colSleep card border border-2">
+                    <span class="text-center centerTextCardSpan">Scopri i nostri prezzi!</span>
+                </div>
+                <div class="col colSleep card border border-2">
+                    <span class="text-center centerTextCardSpan">Scopri i nostri prezzi!</span>
+                </div>
+                <div class="col colSleep card border border-2">
+                    <span class="text-center centerTextCardSpan">Scopri i nostri prezzi!</span>
+                </div>
+            </div>
+
+            <div class="dinamicDiv"></div>
+        </div>
+        
+        <div class="col col-sm container border border-success mt-4 ms-1 newsletterDiv text-center">
+            <h2 class="mb-4 textbreak text-light">Rimani Aggiornato!</h1>
+            <label for="inputNewsletter " class="textbreaak fw-light text-light">Inserisci la tua mail per iscriverti alla newsletter di RentACar.com!</p>
+            <div class="input-group" id="inputNewsletter">
+                <input type="text" class="form-control" placeholder="" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
             </div>
         </div>
     </body>    
