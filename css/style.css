@@ -70,4 +70,8 @@ div.newsletterDiv {
 .dinamicDiv{
   background-color: inherit;
 }
+
+.toBeArrotondato{
+  border-radius: 10px;
+}
 /*# sourceMappingURL=style.css.map */

@@ -46,27 +46,101 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                            <a class="nav-link" href="#">I miei ordini</a>
                         </li>
                     </ul>
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <button class="btn btn-outline-primary me-1" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>
+                        <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal1">Sign in</button>
                     </form>
+
+                    <div class="modal fade" id="signUpModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content border border-3 border-primary rounded-3">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Continua per registrarti!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <label for="inputNome">Nome</label>
+                                            <input type="text" class="form-control" id="inputNome">
+                                        </div>
+                                        <div class="col-sm">
+                                            <label for="inputCognome">Cognome</label>
+                                            <input type="text" class="form-control" id="inputCognome">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-sm-9">
+                                            <label for="inputIndirizzo">Indirizzo Via/Viale</label>
+                                            <input type="text" class="form-control" id="inputIndirizzo">
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label for="inputCivico">N° Civico</label>
+                                            <input type="text" class="form-control" id="inputCivico">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col">
+                                            <label for="inputNascita">Data Nascita</label>
+                                            <input type="text" class="form-control" id="inputNascita">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-1">
+                                        <label for="inputEmail">Email</label></div>
+                                        <div class="col input-group">
+                                            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-primary">Invio</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="signInModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content border border-3 border-success rounded-3">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Continua per accedere!</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="row mb-3">
+                                          <div class="col-sm-10 input-group">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                            <input type="email" class="form-control" id="inputEmail3" aria-describedby="basic-addon2">
+                                            <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
+                                          </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                          <div class="col-sm-10 input-group">
+                                            <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                                            <input type="password" class="form-control" id="inputPassword3">
+                                          </div>
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="form-check">
+                                              <input class="form-check-input" type="checkbox" id="gridCheck">
+                                              <label class="form-check-label" for="gridCheck">
+                                                Remember me
+                                              </label>
+                                            </div>
+                                        </div>                                    
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-success">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -133,13 +207,13 @@
             <!-- Box 3 Cose AJAX -->
             <div class="row rowCards text-dark mt-2 px-0 mx-lg-1 mx-md-1 justify-content-lg-center justify-content-md-center">
                 <div id="offerteDiv" class="col card normalCard border border-2 activeCard">
-                    <span class="text-center normalSpanCard activeSpanCard">Scopri i nostri prezzi!</span>
+                    <span class="text-center fs-2 normalSpanCard activeSpanCard">Scopri i nostri prezzi!</span>
                 </div>
                 <div class="col card normalCard border border-2">
-                    <span class="text-center normalSpanCard">Perche scegliere noi?</span>
+                    <span class="text-center fs-4 normalSpanCard">Perche scegliere noi?</span>
                 </div>
                 <div class="col card normalCard border border-2">
-                    <span class="text-center normalSpanCard">Offerte del mese!</span>
+                    <span class="text-center fs-4 normalSpanCard">Offerte del mese!</span>
                 </div>
             </div>
 
