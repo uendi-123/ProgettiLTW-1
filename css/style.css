@@ -55,14 +55,14 @@ div.newsletterDiv {
 
 /* line 43, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
 .normalSpanCard {
-  font-size: 2em;
+  /* font-size: 2em; */
   margin: auto;
   border-bottom: 2px white solid;
 }
 
 /* line 48, ../../Google Drive/File VS Code/LTW/ProgettiLTW/scss/style.sass */
 .activeSpanCard {
-  font-size: 2em;
+  /* font-size: 2em; */
   color: red;
   margin: auto;
   border-bottom: 5px red solid;
