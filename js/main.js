@@ -1,5 +1,36 @@
 $(document).ready(function(){
     $('#dinamicDiv').load('../html/offerte.html');
+    //Calendario Data Inizio
+    $("#dateStart").datepicker();
+    $('#calendarIconStart').click(function(){
+        $("#dateStart").focus();
+    });
+    //Calendario Data Fine
+    $("#dateEnd").datepicker({ dateFormat: 'dd-mm-yy' });
+    $('#calendarIconEnd').click(function(){
+        $("#dateEnd").focus();
+    });
+
+    $('#showHideBtnSignUp').click(function(event) {
+        if($('#inputPassSignUpModal').val().length > 1){
+            event.preventDefault();
+            $('#showPassIconSignUp').toggle();
+            $('#hidePassIconSignUp').toggle();
+
+            hideShowPass($('#inputPassSignUpModal'));
+        }
+    });
+    $('#showHideBtnSignIn').click(function(event) {
+        if($('#inputPassSignInModal').val().length > 1){
+            event.preventDefault();
+            $('#showPassIconSignIn').toggle();
+            $('#hidePassIconSignIn').toggle();
+
+            hideShowPass($('#inputPassSignInModal'));
+        }
+    });
+
+
     
     $('.normalCard').click(function(){
         // $('.normalCard').removeClass('activeCard');
@@ -26,3 +57,11 @@ $(document).ready(function(){
         }
     })
 })
+
+let hideShowPass = el => {
+    if (el.attr("type") == "password") {
+        el.attr("type", "text");
+    } else {
+        el.attr("type", "password");
+    }
+}
