@@ -1,16 +1,18 @@
 $(document).ready(function(){
     $('#dinamicDiv').load('../html/offerte.html');
-    // Calendario Data Inizio
+    //Input che fanno uso dell'API Datepicker
+    $('#dateStart').datepicker();
+    $('#dateEnd').datepicker();
+    $('#inputNascita').datepicker();
+
+    //Implementazione dei Btn degli input con datepicker
     $('#calendarIconStart').click(function(){
-        dateInput(this.parent('div').parent('div').children('input'));
+        $('#dateStart').focus();
     });
-    //Calendario Data Fine
-    $("#dateEnd").datepicker({ dateFormat: 'dd-mm-yy' });
     $('#calendarIconEnd').click(function(){
         $("#dateEnd").focus();
     });
 
-    $('#inputNascita').datepicker();
     $('#signUpNascitaBtn').click(function(){
         $('#inputNascita').focus();
     })
