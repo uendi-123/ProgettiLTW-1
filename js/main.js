@@ -16,7 +16,7 @@ $(document).ready(function(){
     $('#signUpNascitaBtn').click(function(){
         $('#inputNascita').focus();
     })
-
+    //Campo pass SignUP
     $('#showHideBtnSignUp').click(function(event) {
         if($('#inputPassSignUpModal').val().length > 1){
             event.preventDefault();
@@ -26,6 +26,17 @@ $(document).ready(function(){
             hideShowPass($('#inputPassSignUpModal'));
         }
     });
+    //Campo conferma pass SignUP
+    $('#showHideConfirmBtnSignUp').click(function(event) {
+        if($('#inputConfirmPassSignUpModal').val().length > 1){
+            event.preventDefault();
+            $('#showConfirmPassIconSignUp').toggle();
+            $('#hideConfirmPassIconSignUp').toggle();
+
+            hideShowPass($('#inputConfirmPassSignUpModal'));
+        }
+    });
+
     $('#showHideBtnSignIn').click(function(event) {
         if($('#inputPassSignInModal').val().length > 1){
             event.preventDefault();
@@ -36,8 +47,6 @@ $(document).ready(function(){
         }
     });
 
-
-    
     $('.normalCard').click(function(){
         // $('.normalCard').removeClass('activeCard');
         // $(this).addClass('activeCard');
@@ -61,7 +70,36 @@ $(document).ready(function(){
         if($(this).attr('id') === 'offerteDiv'){
             $('#dinamicDiv').load('../html/offerte.html');
         }
+    });
+
+    $('#inputEmailSignIn').change(function(){
+        if(this.val().length > 0){
+            if(this.hasClass('is-invalid')){
+                this.removeClass('is-invalid');
+            }
+            this.addClass('is-valid');
+        } else {
+            if(this.hasClass('is-valid')){
+                this.removeClass('is-valid');
+            }
+            this.addClass('is-invalid');
+        }
     })
+
+    $('#inputPassSignIn').change(function(){
+        if(this.val().length > 0){
+            if(this.hasClass('is-invalid')){
+                this.removeClass('is-invalid');
+            }
+            this.addClass('is-valid');
+        } else {
+            if(this.hasClass('is-valid')){
+                this.removeClass('is-valid');
+            }
+            this.addClass('is-invalid');
+        }
+    })
+
 })
 
 let hideShowPass = el => {

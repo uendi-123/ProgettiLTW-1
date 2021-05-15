@@ -7,65 +7,68 @@ $cognome = '';
 $indirizzo = '';
 $civico = '';
 $dataNascita = '';
-$username = '';
 $email = '';
 $pass = '';
+//Pass2 e' la password di confirm del SignUpForm
+$pass2 = '';
 $errors = array(); 
 
 // connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'registration');
 
 // REGISTER USER
-if (isset($_POST['reg_user'])) {
+if (isset($_POST['reg_user'])){
   // receive all input values from the form
-  $username = mysqli_real_escape_string($db, $_POST['username']);
+  $nome = mysqli_real_escape_string($db, $_POST['nome']);
+  $cognome = mysqli_real_escape_string($db, $_POST['cognome']);
+  $indirizzo = mysqli_real_escape_string($db, $_POST['indirizzo']);
+  $civico = mysqli_real_escape_string($db, $_POST['civico']);
+  $dataNascita = mysqli_real_escape_string($db, $_POST['dataNascita']);
   $email = mysqli_real_escape_string($db, $_POST['email']);
-  $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
-  $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+  $pass = mysqli_real_escape_string($db, $_POST['pass']);
+  $pass2 = mysqli_real_escape_string($db, $_POST['pass2']);
 
-    $nome = mysqli_real_escape_string($db, $_POST['username']);
-    $cognome = '';
-    $indirizzo = '';
-    $civico = '';
-    $dataNascita = '';
-    $username = '';
-    $email = '';
-    $pass = '';
+  // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
 
   // form validation: ensure that the form is correctly filled ...
   // by adding (array_push()) corresponding error unto $errors array
-  if (empty($username)) { array_push($errors, "Username is required"); }
-  if (empty($email)) { array_push($errors, "Email is required"); }
-  if (empty($password_1)) { array_push($errors, "Password is required"); }
-  if ($password_1 != $password_2) {
-	array_push($errors, "The two passwords do not match");
-  }
+  // if (empty($nome)) { array_push($errors, "Nome richiesto"); }
+  // if (empty($cognome)) { array_push($errors, "Cognome richiesto"); }
+  // if (empty($indirizzo)) { array_push($errors, "Indirizzo richiesto"); }
+  // if (empty($civico)) { array_push($errors, "Numero civico richiesto"); }
+  // if (empty($dataNascita)) { array_push($errors, "Data di nascita richiesta"); }
+  // if (empty($email)) { array_push($errors, "Email richiesta"); }
+  // if (empty($password_1)) { array_push($errors, "Password richiesta"); }
+  // if ($password_1 != $password_2) {
+	//   array_push($errors, "Le password immesse non coincidono");
+  // }
 
-  // first check the database to make sure 
-  // a user does not already exist with the same username and/or email
-  $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
+  // first check the database to make sure a user does not already exist with the same username and/or email
+  $user_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
   $result = mysqli_query($db, $user_check_query);
   $user = mysqli_fetch_assoc($result);
   
-  if ($user) { // if user exists
-    if ($user['username'] === $username) {
-      array_push($errors, "Username already exists");
-    }
+  // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
 
-    if ($user['email'] === $email) {
-      array_push($errors, "email already exists");
-    }
-  }
+  // if ($user) { // if user exists
+  //   if ($user['username'] === $username) {
+  //     array_push($errors, "Username already exists");
+  //   }
+
+  //   if ($user['email'] === $email) {
+  //     array_push($errors, "email already exists");
+  //   }
+  // }
 
   // Finally, register user if there are no errors in the form
   if (count($errors) == 0) {
   	$password = md5($password_1);//encrypt the password before saving in the database
 
-  	$query = "INSERT INTO users (username, email, password) 
-  			  VALUES('$username', '$email', '$password')";
+  	$query = "INSERT INTO users (nome, cognome, indirizzo, civico, dataNascita, email, password) 
+  			      VALUES('$nome', '$cognome', '$indirizzo', '$civico', '$dataNascita', '$email', '$password')";
+
   	mysqli_query($db, $query);
-  	$_SESSION['username'] = $username;
-  	$_SESSION['success'] = "You are now logged in";
+  	$_SESSION['success'] = "RentACar.com ti da il benvenuto!";
   	header('location: index.php');
   }
 }
