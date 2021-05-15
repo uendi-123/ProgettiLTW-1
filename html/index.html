@@ -6,22 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RentACar.com</title>
 
-        <!-- MaterializeCSS -->
-        <!-- Compiled and minified CSS -->
-        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
-        <!-- Compiled and minified JavaScript -->
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
-        
         <!-- JS Files -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
-        <!-- <script src="../bootstrap-5.0.0-dist/js/bootstrap.bundle.js"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
         
         <!-- CSS Files -->
-        <!-- <link rel="stylesheet" href="../bootstrap-5.0.0-dist/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />        
@@ -51,7 +43,7 @@
                         <button class="btn btn-outline-primary me-1" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>
                         <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal1">Sign in</button>
                     </form>
-                    <!-- Modal Sign In --> 
+                    <!-- Modal Sign Up --> 
                     <div class="modal fade" id="signUpModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content border border-3 border-primary rounded-3">
@@ -60,63 +52,71 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <label for="inputNome">Nome</label>
-                                            <input type="text" class="form-control" id="inputNome">
+                                    <form method="POST" action="signUP.php">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <label for="inputNome">Nome</label>
+                                                <input type="text" name="nome" class="form-control" id="inputNome">
+                                            </div>
+                                            <div class="col-sm">
+                                                <label for="inputCognome">Cognome</label>
+                                                <input type="text" name="cognome" class="form-control" id="inputCognome">
+                                            </div>
                                         </div>
-                                        <div class="col-sm">
-                                            <label for="inputCognome">Cognome</label>
-                                            <input type="text" class="form-control" id="inputCognome">
+                                        <div class="row mt-1">
+                                            <div class="col-sm-9">
+                                                <label for="inputIndirizzo">Indirizzo Via/Viale</label>
+                                                <input type="text" name="indirizzo" class="form-control" id="inputIndirizzo">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <label for="inputCivico">N° Civico</label>
+                                                <input type="text" name="civico" class="form-control" id="inputCivico">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mt-1">
-                                        <div class="col-sm-9">
-                                            <label for="inputIndirizzo">Indirizzo Via/Viale</label>
-                                            <input type="text" class="form-control" id="inputIndirizzo">
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="inputCivico">N° Civico</label>
-                                            <input type="text" class="form-control" id="inputCivico">
-                                        </div>
-                                    </div>
-                                    <div class="row mt-1">
-                                        <div class="col">
+                                        <div class="row mt-1">
                                             <label for="inputNascita">Data Nascita</label>
-                                            <input type="text" class="form-control" id="inputNascita">
+                                            <div class="col input-group">
+                                                <input type="text" name="dataNascita" class="form-control" id="inputNascita" readonly title="format: dd/MM/y">
+                                                <button class="btn btn-outline-secondary rounded-0 rounded-end input-group-text" type="button" id="signUpNascitaBtn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                </svg>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mt-1">
-                                        <label for="inputEmail">Email</label></div>
-                                        <div class="col input-group">
-                                            <input type="text" id="inputEmail" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                            <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
-                                        </div>
+                                        <div class="row mt-1">
+                                            <label for="inputEmail">Email</label></div>
+                                            <div class="col input-group">
+                                                <input type="text" id="inputEmail" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
+                                            </div>
 
-                                        <div class="col form-group">
-                                            <label for="inputPasswordSignUpModal" class="col-sm-2 col-form-label">Password</label>
-                                          <div class="col-sm-10 input-group">
-                                            <input type="password" class="form-control" id="inputPassSignUpModal">
-                                            <button type="button" class="input-group-text" id="showHideBtnSignUp">
-                                                <svg xmlns="http://www.w3.org/2000/svg" id="hidePassIconSignUp" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
-                                                    <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
-                                                    <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
-                                                    <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
-                                                </svg>
-                                                <svg xmlns="http://www.w3.org/2000/svg" id="showPassIconSignUp" style="display: none;" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                                                </svg>
-                                            </button>
-                                          </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-primary">Invio</button>
-                                    </div>
+                                            <div class="col form-group">
+                                                <label for="inputPasswordSignUpModal" class="col-sm-2 col-form-label">Password</label>
+                                            <div class="col-sm-10 input-group">
+                                                <input type="password" class="form-control" id="inputPassSignUpModal">
+                                                <button type="button" class="input-group-text" id="showHideBtnSignUp">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="hidePassIconSignUp" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                                        <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                                                        <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                                                        <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" id="showPassIconSignUp" style="display: none;" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-outline-primary">Invio</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                   
                     <!-- Modal Sign In --> 
                     <div class="modal fade" id="signInModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -184,21 +184,21 @@
                                 <input type="text" class="form-control" placeholder="Inserisci Citta">
                             </div>
                         </div>
+                        <div class="row">
+                            <label class="text-light text-center mb-1">Periodo Noleggio</label>
+                        </div>
                         <div class="row mb-1">
-                            <div class='col-5'>
+                            <div class='col-lg-5 col-md-6 col-sm-6'>
                                 <div class="input-group mb-3">
                                     <input id="dateStart" type="text" class="form-control" placeholder="Data inizio noleggio" aria-label="Data inizio noleggio" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary rounded-0 rounded-end" type="button" id="calendarIconStart">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                        </svg>
-                                        </button>
-                                    </div>
+                                    <button class="btn btn-outline-secondary rounded-0 rounded-end input-group-text" type="button" id="calendarIconStart">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    </svg>
+                                    </button>
                                 </div>
                             </div>
-        
-                            <div class='col-5'>
+                            <div class='col-lg-5 col-md-6 col-sm-6'>
                                 <div class="input-group mb-3">
                                     <input id="dateEnd" type="text" class="form-control date" placeholder="Data fine noleggio" aria-label="Data fine noleggio" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
@@ -210,7 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-lg-2 col-sm-12 col-md-12">
                                 <button class="btn btn-success btnToSpread" type="button">Cerca</button>
                             </div>
                         </div>

@@ -1,15 +1,19 @@
 $(document).ready(function(){
     $('#dinamicDiv').load('../html/offerte.html');
-    //Calendario Data Inizio
-    $("#dateStart").datepicker();
+    // Calendario Data Inizio
     $('#calendarIconStart').click(function(){
-        $("#dateStart").focus();
+        dateInput(this.parent('div').parent('div').children('input'));
     });
     //Calendario Data Fine
     $("#dateEnd").datepicker({ dateFormat: 'dd-mm-yy' });
     $('#calendarIconEnd').click(function(){
         $("#dateEnd").focus();
     });
+
+    $('#inputNascita').datepicker();
+    $('#signUpNascitaBtn').click(function(){
+        $('#inputNascita').focus();
+    })
 
     $('#showHideBtnSignUp').click(function(event) {
         if($('#inputPassSignUpModal').val().length > 1){
@@ -64,4 +68,14 @@ let hideShowPass = el => {
     } else {
         el.attr("type", "password");
     }
+}
+
+let dateInput = el =>{
+
+    btn = $(el).children('btn');
+
+    el.datepicker();
+    $(btn).click(function(){
+        $(el).focus();
+    })
 }
