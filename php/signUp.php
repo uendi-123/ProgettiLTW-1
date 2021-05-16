@@ -34,6 +34,8 @@ if (isset($_POST['reg_user'])){
   $pass = mysqli_real_escape_string($db, $_POST['pass']);
   $pass2 = mysqli_real_escape_string($db, $_POST['pass2']);
 
+  
+
   // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
 
   // form validation: ensure that the form is correctly filled ...

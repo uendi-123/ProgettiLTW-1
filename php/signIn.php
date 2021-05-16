@@ -1,4 +1,5 @@
 <?
+require_once('database.php');
 // LOGIN USER
 if (isset($_POST['login_user'])) {
     $email = mysqli_real_escape_string($db, $_POST['email']);
@@ -19,6 +20,8 @@ if (isset($_POST['login_user'])) {
         $_SESSION['username'] = $username;
         $_SESSION['success'] = "You are now logged in";
         header('location: index.php');
+    } else {
+        $_SESSION[''];
     }
 }
 ?>
