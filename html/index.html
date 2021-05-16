@@ -86,7 +86,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body pt-1">
-                                <form method="POST" action="signUP.php">
+                                <form class="needs-validation" method="POST" action="../php/signUp.php" id="SignUpForm" novalidate>
                                     <div class="row">
                                         <div class="col-sm">
                                             <label for="inputNome">Nome</label>
@@ -147,7 +147,7 @@
                                         <div class="col form-group">
                                             <label for="inputConfirmPasswordSignUpModal" class="col-sm col-form-label">Conferma Password</label>
                                             <div class="col input-group">
-                                                <input type="password" class="form-control" id="inputConfirmPassSignUpModal" name="pass2">
+                                                <input type="password" class="form-control is-invalid" id="inputConfirmPassSignUpModal" name="pass2">
                                                 <button type="button" class="input-group-text" id="showHideConfirmBtnSignUp">
                                                     <svg xmlns="http://www.w3.org/2000/svg" id="hideConfirmPassIconSignUp" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
                                                         <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
@@ -159,13 +159,16 @@
                                                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                                                     </svg>
                                                 </button>
+                                                <div class="invalid-feedback">
+                                                    Le password non coincidono
+                                                  </div>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer mt-1">
-                                <button type="submit" class="btn btn-outline-primary" name="reg_user">Invio</button>
+                                <button id="SignUpSubmit" type="submit" class="btn btn-outline-primary" name="reg_user" onsubmit="console.log(checkSubmitSignUp())">Invio</button>
                             </div>
                         </div>
                     <!-- Modal Dialog -->
@@ -173,7 +176,6 @@
                 <!-- Modal -->
                 </div>
                 
-                  
                 <!-- Modal Sign In --> 
                 <div class="modal fade text-dark" id="signInModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -183,7 +185,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body pt-0">
-                                <form class="needs-validation" method="POST" action="signIn.php" novalidate>
+                                <form class="needs-validation" method="POST" action="../php/signIn.php" novalidate id="SignInForm">
                                     <div class="row mb-1">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                                       <div class="col-sm-10 input-group">
@@ -208,16 +210,16 @@
                                         </button>
                                       </div>
                                     </div>
-                                    <div class="col-10">
+                                    <!-- <div class="col-10">
                                         <div class="form-check">
                                           <input class="form-check-input" type="checkbox" id="gridCheck">
                                           <label class="form-check-label" for="gridCheck">Remember me</label>
                                         </div>
-                                    </div>                                    
+                                    </div>                                     -->
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-outline-success" name='login_user' onclick="validateSignInForm()">Login</button>
+                                <button type="submit" class="btn btn-outline-success" name='login_user' onclick="checkSubmitSignIn()">Login</button>
                             </div>
                         </div>
                     </div>

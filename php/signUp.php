@@ -14,7 +14,13 @@ $pass2 = '';
 $errors = array(); 
 
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'registration');
+$db = mysqli_connect('localhost', 'root', '', 'userdb');
+
+//check connection
+if ($db -> connect_errno) {
+  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+  exit();
+}
 
 // REGISTER USER
 if (isset($_POST['reg_user'])){
@@ -69,6 +75,6 @@ if (isset($_POST['reg_user'])){
 
   	mysqli_query($db, $query);
   	$_SESSION['success'] = "RentACar.com ti da il benvenuto!";
-  	header('location: index.php');
+  	header('location: ../html/welcome.html');
   }
 }

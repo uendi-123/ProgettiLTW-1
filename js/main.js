@@ -72,50 +72,106 @@ $(document).ready(function(){
         }
     });
 
-    $('#inputEmailSignIn').change(function(){
-        if(this.val().length > 0){
-            if(this.hasClass('is-invalid')){
-                this.removeClass('is-invalid');
-            }
-            this.addClass('is-valid');
+    //SignUp Validation
+    //La seguente istruzione mette nell'array tutti gli elem <input> del form
+    var InputToCheckSignUp = $('#SignUpForm input');
+    InputToCheckSignUp.each(function(){
+        if($(this).attr('id') !== 'inputConfirmPassSignUpModal'){
+            $(this).change(function(){
+                console.log($(this).val() + ' ' + $(this).attr('id'));
+                if($(this).val().length > 0){
+                    if($(this).hasClass('is-invalid')){
+                        $(this).removeClass('is-invalid');
+                    }
+                    $(this).addClass('is-valid');
+                } else {
+                    if($(this).hasClass('is-valid')){
+                        $(this).removeClass('is-valid');
+                    }
+                    $(this).addClass('is-invalid');
+                }
+            })
         } else {
-            if(this.hasClass('is-valid')){
-                this.removeClass('is-valid');
-            }
-            this.addClass('is-invalid');
+            //Check Pass e Conferma Pass
+            $(this).change(function(){
+                if($(this).val() === $('#inputPassSignUpModal').val()){
+                    if($(this).hasClass('is-invalid')){
+                        $(this).removeClass('is-invalid');
+                    } 
+                    $(this).addClass('is-valid');
+                } else {
+                    if($(this).hasClass('is-valid')){
+                        $(this).removeClass('is-valid');
+                    }
+                    $(this).addClass('is-invalid');
+                }
+            })
         }
     })
 
-    $('#inputPassSignIn').change(function(){
-        if(this.val().length > 0){
-            if(this.hasClass('is-invalid')){
-                this.removeClass('is-invalid');
+    //SignIn Validation
+    //La seguente istruzione mette nell'array tutti gli elem <input> del form
+    var InputToCheckSignIn = $('#SignInForm input');
+    
+    InputToCheckSignIn.each(function(){
+        $(this).change(function(){
+            if($(this).val().length > 0){
+                if($(this).hasClass('is-invalid')){
+                    $(this).removeClass('is-invalid');
+                }
+                $(this).addClass('is-valid');
+            } else {
+                if($(this).hasClass('is-valid')){
+                    $(this).removeClass('is-valid');
+                }
+                $(this).addClass('is-invalid');
             }
-            this.addClass('is-valid');
-        } else {
-            if(this.hasClass('is-valid')){
-                this.removeClass('is-valid');
-            }
-            this.addClass('is-invalid');
-        }
+        })
     })
-
 })
 
-let hideShowPass = el => {
-    if (el.attr("type") == "password") {
-        el.attr("type", "text");
-    } else {
-        el.attr("type", "password");
+    let hideShowPass = el => {
+        if (el.attr("type") == "password") {
+            el.attr("type", "text");
+        } else {
+            el.attr("type", "password");
+        }
     }
-}
 
-let dateInput = el =>{
+    let dateInput = el =>{
 
-    btn = $(el).children('btn');
+        btn = $(el).children('btn');
 
-    el.datepicker();
-    $(btn).click(function(){
-        $(el).focus();
-    })
-}
+        el.datepicker();
+        $(btn).click(function(){
+            $(el).focus();
+        })
+    }
+
+    //Controllo che tutti i campi del form SignIn siano validi
+    let checkSubmitSignIn = () => {
+        var InputToCheckSignIn = $('#SignInForm input');
+        var check = true;
+
+        InputToCheckSignIn.each(function(){
+            if($(this).hasClass('is-invalid') || !$(this).hasClass('is-valid')){
+                check = false;
+            }
+        })
+
+       return(check ? true : false);
+    }
+
+    //Controllo che tutti i campi del form SignUp siano validi
+    let checkSubmitSignUp = () => {
+        var InputToCheckSignUp = $('#SignUpForm input');
+        var check = true;
+
+        InputToCheckSignUp.each(function(){
+            if($(this).hasClass('is-invalid') || !$(this).hasClass('is-valid')){
+                check = false;
+            }
+        })
+
+       return(check ? true : false);
+    }
