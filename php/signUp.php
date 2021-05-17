@@ -25,16 +25,23 @@ if ($db -> connect_errno) {
 // REGISTER USER
 if (isset($_POST['reg_user'])){
   // receive all input values from the form
-  $nome = mysqli_real_escape_string($db, $_POST['nome']);
-  $cognome = mysqli_real_escape_string($db, $_POST['cognome']);
-  $indirizzo = mysqli_real_escape_string($db, $_POST['indirizzo']);
-  $civico = mysqli_real_escape_string($db, $_POST['civico']);
-  $dataNascita = mysqli_real_escape_string($db, $_POST['dataNascita']);
-  $email = mysqli_real_escape_string($db, $_POST['email']);
-  $pass = mysqli_real_escape_string($db, $_POST['pass']);
-  $pass2 = mysqli_real_escape_string($db, $_POST['pass2']);
+  // $nome = mysqli_real_escape_string($db, $_POST['nome']);
+  // $cognome = mysqli_real_escape_string($db, $_POST['cognome']);
+  // $indirizzo = mysqli_real_escape_string($db, $_POST['indirizzo']);
+  // $civico = mysqli_real_escape_string($db, $_POST['civico']);
+  // $dataNascita = mysqli_real_escape_string($db, $_POST['dataNascita']);
+  // $email = mysqli_real_escape_string($db, $_POST['email']);
+  // $pass = mysqli_real_escape_string($db, $_POST['pass']);
+  // $pass2 = mysqli_real_escape_string($db, $_POST['pass2']);
 
-  
+  $nome = $_POST['nomeSU'];
+  $cognome = $_POST['cognomeSU'];
+  $indirizzo = $_POST['indirizzoSU'];
+  $civico = $_POST['civicoSU'];
+  $dataNascita = $_POST['dataNascitaSU']; 
+  $email = $_POST['emailSU'] . 'studenti.uniroma1.it';
+  $pass = $_POST['pass1SU'];
+  $pass2 = $_POST['pass2SU'];
 
   // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
 
@@ -53,7 +60,7 @@ if (isset($_POST['reg_user'])){
 
   // first check the database to make sure a user does not already exist with the same username and/or email
   $user_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
-  $result = mysqli_query($db, $user_check_query);
+  $result = mysqli_query($db, $user_check_query); 
   $user = mysqli_fetch_assoc($result);
   
   // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
@@ -69,14 +76,16 @@ if (isset($_POST['reg_user'])){
   // }
 
   // Finally, register user if there are no errors in the form
-  if (count($errors) == 0) {
-  	$password = md5($password_1);//encrypt the password before saving in the database
+  if ($user) {
+  	$password = md5($pass);//encrypt the password before saving in the database
 
   	$query = "INSERT INTO users (nome, cognome, indirizzo, civico, dataNascita, email, password) 
   			      VALUES('$nome', '$cognome', '$indirizzo', '$civico', '$dataNascita', '$email', '$password')";
 
   	mysqli_query($db, $query);
   	$_SESSION['success'] = "RentACar.com ti da il benvenuto!";
-  	header('location: ../html/welcome.html');
   }
+
+  $db -> close();
+  header('location: ../html/welcome.html');
 }

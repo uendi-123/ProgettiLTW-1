@@ -38,12 +38,12 @@ $(document).ready(function(){
     });
 
     $('#showHideBtnSignIn').click(function(event) {
-        if($('#inputPassSignInModal').val().length > 1){
+        if($('#inputPassSignIn').val().length > 1){
             event.preventDefault();
             $('#showPassIconSignIn').toggle();
             $('#hidePassIconSignIn').toggle();
 
-            hideShowPass($('#inputPassSignInModal'));
+            hideShowPass($('#inputPassSignIn'));
         }
     });
 
@@ -111,7 +111,7 @@ $(document).ready(function(){
 
     //SignIn Validation
     //La seguente istruzione mette nell'array tutti gli elem <input> del form
-    var InputToCheckSignIn = $('#SignInForm input');
+    var InputToCheckSignIn = $('#signInForm input');
     
     InputToCheckSignIn.each(function(){
         $(this).change(function(){
@@ -128,6 +128,25 @@ $(document).ready(function(){
             }
         })
     })
+
+    // $("#submitBtn").click(function(){
+    //     if(checkSubmitSignIn){
+    //         $.ajax({
+    //             url:"http://127.0.0.1:3000/php/signIn.php",
+    //             method: "POST", 
+    //             headers: {
+    //             'Access-Control-Allow-Origin': '*'
+    //             },
+    //             data:$("#requestForm").serialize(),
+    //             success:function(response)
+    //             {
+    //             alert("Well done!");
+    //             }
+    //         });
+    //     } else {
+    //         alert('ERRORE');
+    //     }
+    //   });
 })
 
     let hideShowPass = el => {
@@ -159,7 +178,7 @@ $(document).ready(function(){
             }
         })
 
-       return(check ? true : false);
+       return check;
     }
 
     //Controllo che tutti i campi del form SignUp siano validi
@@ -173,5 +192,5 @@ $(document).ready(function(){
             }
         })
 
-       return(check ? true : false);
+       return check;
     }
