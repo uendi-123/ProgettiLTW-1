@@ -2,90 +2,48 @@
 session_start();
 
 // initializing variables
-$nome = '';
-$cognome = '';
-$indirizzo = '';
-$civico = '';
-$dataNascita = '';
-$email = '';
-$pass = '';
-//Pass2 e' la password di confirm del SignUpForm
-$pass2 = '';
-$errors = array(); 
+$nome = "";
+$cognome = "";
+$indirizzo = "";
+$civico = "";
+$dataNascita = "";
+$email = "";
+$pass = "";
+
 
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'userdb');
-
-//check connection
-if ($db -> connect_errno) {
-  echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-  exit();
-}
+$db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error()); 
 
 // REGISTER USER
-if (isset($_POST['reg_user'])){
-  // receive all input values from the form
-  // $nome = mysqli_real_escape_string($db, $_POST['nome']);
-  // $cognome = mysqli_real_escape_string($db, $_POST['cognome']);
-  // $indirizzo = mysqli_real_escape_string($db, $_POST['indirizzo']);
-  // $civico = mysqli_real_escape_string($db, $_POST['civico']);
-  // $dataNascita = mysqli_real_escape_string($db, $_POST['dataNascita']);
-  // $email = mysqli_real_escape_string($db, $_POST['email']);
-  // $pass = mysqli_real_escape_string($db, $_POST['pass']);
-  // $pass2 = mysqli_real_escape_string($db, $_POST['pass2']);
+if (isset($_POST["reg_user"])){
 
-  $nome = $_POST['nomeSU'];
-  $cognome = $_POST['cognomeSU'];
-  $indirizzo = $_POST['indirizzoSU'];
-  $civico = $_POST['civicoSU'];
-  $dataNascita = $_POST['dataNascitaSU']; 
-  $email = $_POST['emailSU'] . 'studenti.uniroma1.it';
-  $pass = $_POST['pass1SU'];
-  $pass2 = $_POST['pass2SU'];
+  $nome = $_POST["nomeSU"];
+  $cognome = $_POST["cognomeSU"];
+  $indirizzo = $_POST["indirizzoSU"];
+  $civico = $_POST["civicoSU"];
+  $dataNascita = $_POST["dataNascitaSU"]; 
+  $email = $_POST["emailSU"] . "studenti.uniroma1.it";
+  $pass = $_POST["pass1SU"];
 
-  // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
-
-  // form validation: ensure that the form is correctly filled ...
-  // by adding (array_push()) corresponding error unto $errors array
-  // if (empty($nome)) { array_push($errors, "Nome richiesto"); }
-  // if (empty($cognome)) { array_push($errors, "Cognome richiesto"); }
-  // if (empty($indirizzo)) { array_push($errors, "Indirizzo richiesto"); }
-  // if (empty($civico)) { array_push($errors, "Numero civico richiesto"); }
-  // if (empty($dataNascita)) { array_push($errors, "Data di nascita richiesta"); }
-  // if (empty($email)) { array_push($errors, "Email richiesta"); }
-  // if (empty($password_1)) { array_push($errors, "Password richiesta"); }
-  // if ($password_1 != $password_2) {
-	//   array_push($errors, "Le password immesse non coincidono");
-  // }
-
-  // first check the database to make sure a user does not already exist with the same username and/or email
-  $user_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
-  $result = mysqli_query($db, $user_check_query); 
-  $user = mysqli_fetch_assoc($result);
+  //query per ricercare eventuale mail gia presente nel DB
+  $query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
   
-  // Se non viene implementato il validations form fornito da bootstrap decommentare il seguente blocco
-
-  // if ($user) { // if user exists
-  //   if ($user['username'] === $username) {
-  //     array_push($errors, "Username already exists");
-  //   }
-
-  //   if ($user['email'] === $email) {
-  //     array_push($errors, "email already exists");
-  //   }
-  // }
-
-  // Finally, register user if there are no errors in the form
-  if ($user) {
-  	$password = md5($pass);//encrypt the password before saving in the database
-
-  	$query = "INSERT INTO users (nome, cognome, indirizzo, civico, dataNascita, email, password) 
-  			      VALUES('$nome', '$cognome', '$indirizzo', '$civico', '$dataNascita', '$email', '$password')";
-
-  	mysqli_query($db, $query);
-  	$_SESSION['success'] = "RentACar.com ti da il benvenuto!";
+  //Eseguo la query
+  $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+  if ($result){
+    $values = array("nome" => $nome, "cognome" => $cognome, "indirizzo" => $indirizzo, "civico" => $civico, "datanascita" => $dataNascita, "email" => $email, "password" => $pass);
+    if(pg_insert($db, "users", $values, PGSQL_DML_STRING)){
+      echo '<script>alert(\'RentACar.com ti da il benvenuto\')</script>';
+      pg_close($db);
+      header("location: ../html/welcome.html");
+    } else {
+      echo '<script>alert(\'Errore nella registrazione\')</script>';
+      pg_close($db);
+      header("location: ../html/index.html");
+    }
+  } else {
+    echo '<script>alert(\'Mail gia in uso\')</script>';
+    pg_close($db);
+    header("location: ../html/index.html");
   }
-
-  $db -> close();
-  header('location: ../html/welcome.html');
 }
