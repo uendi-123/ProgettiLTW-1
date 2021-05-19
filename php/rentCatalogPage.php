@@ -17,7 +17,9 @@
         <!-- JS FILES -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
         <!-- CSS FILES -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
@@ -26,7 +28,7 @@
     <body class="bg-dark">
       <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
           <div class="container-fluid">
-              <a class="navbar-brand fs-2 logo" href="index.html">RentACar.com</a>
+              <a class="navbar-brand fs-2 logo" href="index.php">RentACar.com</a>
 
               <button class="btn btn-outline-secondary navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -250,12 +252,17 @@
                             $cilindrata = $row[2];
                             $posti = $row[3];
                             $cambio = $row[4];
-
-                            echo '<div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-2 border-light">';
-                            echo    '<img src="../img/imgAuto/'. $img .'" class="card-img-top mt-1 img-fluid" alt="...">';
+                            // Aumentare card height ad SM, provare con media-queries
+                            echo '<div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark ">';
+                            echo    '<img src="../img/imgAuto/'. $img .'" class="card-img-top mt-1 fluidImg mx-1" alt="...">';
                             echo    '<div class="card-body">';
-                            echo        '<h5 class="card-title">'. "$marchio $nome" .'</h5>';
-                            echo        '<p class="card-text">Cilindrata: '. $cilindrata.'</br>Posti: '. $posti.'</br>Cambio: '. $cambio.'</p>';
+                            echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' ."$marchio $nome" .'</h5>';
+                            echo        '<p class="card-text">
+                                                            <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $cilindrata.'</br>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
+                                                            Posti: '. $posti.'</br>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
+                                                            Cambio: '. $cambio.'</p>';
                             echo    '</div>';
                             echo '</div>';
                             echo '';

@@ -112,7 +112,6 @@ $(document).ready(function(){
     //SignIn Validation
     //La seguente istruzione mette nell'array tutti gli elem <input> del form
     var InputToCheckSignIn = $('#signInForm input');
-    
     InputToCheckSignIn.each(function(){
         $(this).change(function(){
             if($(this).val().length > 0){
@@ -128,50 +127,84 @@ $(document).ready(function(){
             }
         })
     })
+
+    //Form Noleggio Validation
+    var InputToCheckNoleggio = $('#noleggioForm input');
+    InputToCheckNoleggio.each(function(){
+        var check = true;
+        $(this).change(function(){
+            if($(this).val().length > 0){
+                if($(this).hasClass('is-invalid')){
+                    $(this).removeClass('is-invalid');
+                }
+                $(this).addClass('is-valid');
+                check = true;
+            } else {
+                if($(this).hasClass('is-valid')){
+                    $(this).removeClass('is-valid');
+                }
+                $(this).addClass('is-invalid');
+                check = false;
+            }
+            invalidButton('#noleggioSubmitBtn', check);
+        })
+    })
 })
 
-    let hideShowPass = el => {
-        if (el.attr("type") == "password") {
-            el.attr("type", "text");
-        } else {
-            el.attr("type", "password");
+let hideShowPass = el => {
+    if (el.attr("type") == "password") {
+        el.attr("type", "text");
+    } else {
+        el.attr("type", "password");
+    }
+}
+let dateInput = el =>{
+
+    btn = $(el).children('btn');
+
+    el.datepicker();
+    $(btn).click(function(){
+        $(el).focus();
+    })
+}
+//Controllo che tutti i campi del form SignIn siano validi
+let checkSubmitSignIn = () => {
+    var InputToCheckSignIn = $('#SignInForm input');
+    var check = true;
+
+    InputToCheckSignIn.each(function(){
+        if($(this).hasClass('is-invalid') || !$(this).hasClass('is-valid')){
+            check = false;
         }
+    })
+    return check;
+}
+//Controllo che tutti i campi del form SignUp siano validi
+let checkSubmitSignUp = () => {
+    var InputToCheckSignUp = $('#SignUpForm input');
+    var check = true;
+
+    InputToCheckSignUp.each(function(){
+        if($(this).hasClass('is-invalid') || !$(this).hasClass('is-valid')){
+            check = false;
+        }
+    })
+    return check;
+}
+//Disabilita il Btn cerca fin quando tutti gli input (Citta, DataInizioNoleggio, DataFineNoleggio) non sono validi, cioe con length > 0
+let invalidButton = (el, check) => {
+    var InputToCheckNoleggio = $('#noleggioForm input');
+
+    InputToCheckNoleggio.each(function(){
+        if($(this).val().length < 1){
+            check = false;
+        }
+    })
+
+    if($(el).is('[disabled]') && check == true){
+        $(el).prop('disabled', false);
+    } else if(!$(el).is('[disabled]') && check == false){
+        $(el).prop('disabled', true);
     }
+}
 
-    let dateInput = el =>{
-
-        btn = $(el).children('btn');
-
-        el.datepicker();
-        $(btn).click(function(){
-            $(el).focus();
-        })
-    }
-
-    //Controllo che tutti i campi del form SignIn siano validi
-    let checkSubmitSignIn = () => {
-        var InputToCheckSignIn = $('#SignInForm input');
-        var check = true;
-
-        InputToCheckSignIn.each(function(){
-            if($(this).hasClass('is-invalid') || !$(this).hasClass('is-valid')){
-                check = false;
-            }
-        })
-
-       return check;
-    }
-
-    //Controllo che tutti i campi del form SignUp siano validi
-    let checkSubmitSignUp = () => {
-        var InputToCheckSignUp = $('#SignUpForm input');
-        var check = true;
-
-        InputToCheckSignUp.each(function(){
-            if($(this).hasClass('is-invalid') || !$(this).hasClass('is-valid')){
-                check = false;
-            }
-        })
-
-       return check;
-    }
