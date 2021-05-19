@@ -1,5 +1,7 @@
 <?php 
     session_start();
+    //Salvo sulla session la pagina corrente cosi da poterci tornare in caso di login da tale pagina
+    $_SESSION['currentPage'] = 'index.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +24,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />        
-        
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
         <script src="../js/main.js"></script>
@@ -31,7 +32,7 @@
         <!-- NavBar -->
         <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
             <div class="container-fluid">
-                <a class="navbar-brand fs-2 logo" href="index.html">RentACar.com</a>
+                <a class="navbar-brand fs-2 logo" href="index.php">RentACar.com</a>
 
                 <button class="btn btn-outline-secondary navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -51,24 +52,23 @@
 
                     <div class="row nav-footer mt-3 border border-0 border-top border-secondary">
                         <div class="col-lg-3 btn-group mt-2">
-                            <?php 
-                                // if(isset($_SESSION['errorMsg'])){
-                                //     echo '<script>confirm('.$_SESSION['errorMsg'].')</script>';
-                                // } else if(isset($_SESSION['successRegMsg'])){
-                                //     echo '<script>confirm('.$_SESSION['successRegMsg'].')</script>';
-                                // }
-
+                            <?php
                                 //Post Registrazione
                                 if(isset($_SESSION['errorReg'])){
                                     destroySessionAndGoBack($_SESSION['errorReg']);
+                                    unset($_SESSION['errorReg']);
                                 } else if(isset($_SESSION['successReg'])){
                                     destroySessionAndGoBack($_SESSION['successReg']);
+                                    unset($_SESSION['successReg']);
+
                                 }
                                 //Post Login
                                 if(isset($_SESSION['errorLogin'])){
                                     destroySessionAndGoBack($_SESSION['errorLogin']);
+                                    unset($_SESSION['errorLogin']);
                                 } else if(isset($_SESSION['successLogin'])){
                                     echo '<script>alert("'.$_SESSION['successLogin'].'");</script>';
+                                    unset($_SESSION['successLogin']);
                                 }
                                 
                                 if(!isset($_SESSION['user'])){

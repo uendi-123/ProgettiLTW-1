@@ -1,9 +1,11 @@
-<?php 
+<?php
+session_start();
     $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error()); 
 
     $query = "SELECT nome, marchio, cilindrata, posti, cambio FROM auto "; 
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-
+    //Salvo sulla session la pagina corrente cosi da poterci tornare in caso di login da tale pagina
+    $_SESSION['currentPage'] = 'rentCatalogPage.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,18 +17,22 @@
         <title>Document</title>
 
         <!-- JS FILES -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous"></script>
         <!-- CSS FILES -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />        
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
         <script src="../js/main.js"></script>
     </head>
     <body class="bg-dark">
-        <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
+    <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
             <div class="container-fluid">
                 <a class="navbar-brand fs-2 logo" href="index.php">RentACar.com</a>
 
@@ -48,15 +54,38 @@
 
                     <div class="row nav-footer mt-3 border border-0 border-top border-secondary">
                         <div class="col-lg-3 btn-group mt-2">
-                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpNoleggioModal">Sign up</button>
-                            <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInNoleggioModal">Sign in</button>
+                            <?php 
+                                //Post Registrazione
+                                if(isset($_SESSION['errorReg'])){
+                                    destroySessionAndGoBack($_SESSION['errorReg']);
+                                    unset($_SESSION['errorReg']);
+                                } else if(isset($_SESSION['successReg'])){
+                                    destroySessionAndGoBack($_SESSION['successReg']);
+                                    unset($_SESSION['successReg']);
+
+                                }
+                                //Post Login
+                                if(isset($_SESSION['errorLogin'])){
+                                    destroySessionAndGoBack($_SESSION['errorLogin']);
+                                    unset($_SESSION['errorLogin']);
+                                } else if(isset($_SESSION['successLogin'])){
+                                    echo '<script>alert("'.$_SESSION['successLogin'].'");</script>';
+                                    unset($_SESSION['successLogin']);
+                                }
+                                
+                                if(!isset($_SESSION['user'])){
+                                    echo '<button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>';
+                                    echo '<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>';
+                                } else {
+                                    echo '<a class="btn btn-outline-danger" href="logout.php">Logout</a>';
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
 
-                <!-- Teoricamente completo, sia html che php, aggiungere validation form fornito da bootstrap -->
                 <!-- Modal Sign Up --> 
-                <div class="modal fade text-dark" id="signUpNoleggioModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade text-dark" id="signUpModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content border border-3 border-primary rounded-3">
                             <div class="modal-header">
@@ -139,7 +168,7 @@
                                                 </button>
                                                 <div class="invalid-feedback">
                                                     Le password non coincidono
-                                                    </div>
+                                                  </div>
                                             </div>
                                         </div>
                                     </div>
@@ -149,13 +178,11 @@
                                 </div>
                             </form>
                         </div>
-                    <!-- Modal Dialog -->
                     </div>
-                <!-- Modal -->
                 </div>
                 
                 <!-- Modal Sign In --> 
-                <div class="modal fade text-dark" id="signInNoleggioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade text-dark" id="signInModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content border border-3 border-success rounded-3">
                             <div class="modal-header">
@@ -166,14 +193,14 @@
                                 <div class="modal-body pt-0">
                                     <div class="row mb-1">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10 input-group">
+                                      <div class="col-sm-10 input-group">
                                         <input type="email" class="form-control" id="inputEmailSignIn" name="emailSI" aria-describedby="basic-addon2" required>
                                         <span class="input-group-text" id="basic-addon2">@studenti.uniroma1.it</span>
-                                        </div>
+                                      </div>
                                     </div>
                                     <div class="row mb-3 form-group">
                                         <label for="inputPasswordSignInModal" class="col-sm-2 col-form-label">Password</label>
-                                        <div class="col-sm-10 input-group">
+                                      <div class="col-sm-10 input-group">
                                         <input type="password" class="form-control" id="inputPassSignIn" name="passSI" required>
                                         <button type="button" class="input-group-text" id="showHideBtnSignIn">
                                             <svg xmlns="http://www.w3.org/2000/svg" id="hidePassIconSignIn" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
@@ -186,12 +213,12 @@
                                                 <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                                             </svg>
                                         </button>
-                                        </div>
+                                      </div>
                                     </div>
                                     <!-- <div class="col-10">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                                            <label class="form-check-label" for="gridCheck">Remember me</label>
+                                          <input class="form-check-input" type="checkbox" id="gridCheck">
+                                          <label class="form-check-label" for="gridCheck">Remember me</label>
                                         </div>
                                     </div>-->
                                 </div>
@@ -216,6 +243,8 @@
                 <button class="btn btn-outline-success buttone">Ordina</button>
               </div>
           </div>
+          <div class="row">
+          </div>
           <!-- Row Cards -->
           <div class="row mt-3">
                     <?php
@@ -224,7 +253,7 @@
 
                             $nome = $row[0];
                             $marchio = $row[1];
-                            $img = $marchio.$nome.'.png';
+                            $img = $marchio.$nome.'.jpg';
                             $cilindrata = $row[2];
                             $posti = $row[3];
                             $cambio = $row[4];
@@ -250,5 +279,11 @@
     </body>
 </html>
 
-
-    
+<?php 
+    function destroySessionAndGoBack($msg){
+        $_SESSION = array();
+        session_destroy();
+        echo '<script>alert("'.$msg.'");</script>';
+        session_start(); 
+    }
+?>

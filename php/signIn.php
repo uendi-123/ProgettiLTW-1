@@ -1,5 +1,10 @@
 <?php
     session_start();
+    if(isset($_SESSION['currentPage'])){
+        $returnPage = $_SESSION['currentPage'];
+    } else {
+        $returnPage = 'index.php';
+    }
     if (isset($_POST['login_user'])) {
         $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error()); 
 
@@ -20,6 +25,7 @@
             $_SESSION['errorLogin'] = 'Credenziali errate, riprova';
         }
         pg_close($db);
-        header('location: ./index.php');
+        session_write_close();
+        header('location: ./'.$returnPage);
     }
 ?>

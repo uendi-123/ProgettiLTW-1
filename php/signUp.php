@@ -1,6 +1,5 @@
 <?php
   session_start();
-  include 'ChromePhp.php';
 
   // initializing variables
   $nome = "";
@@ -40,6 +39,7 @@
       }
     }
     pg_close($db);
+    session_write_close();
     header("location: ./index.php");
   }
 ?>
