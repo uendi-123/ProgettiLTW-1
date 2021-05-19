@@ -1,5 +1,6 @@
 <?php
   session_start();
+  include 'ChromePhp.php';
 
   // initializing variables
   $nome = "";
@@ -33,18 +34,12 @@
     if ($result){
       $values = array("nome" => $nome, "cognome" => $cognome, "indirizzo" => $indirizzo, "civico" => $civico, "datanascita" => $dataNascita, "email" => $email, "password" => $pass);
       if(pg_insert($db, "users", $values)){
-        echo '<script>alert(\'RentACar.com ti da il benvenuto\')</script>';
-        pg_close($db);
-        header("location: ../html/welcome.html");
+        $_SESSION['successReg'] = 'Benvenuto su RentACar.com, accedi per continuare!';
       } else {
-        echo '<script>alert(\'Errore nella registrazione\')</script>';
-        pg_close($db);
-        header("location: ../html/index.html");
+        $_SESSION['errorReg'] = 'Mail gia in uso o errore generale, riprova!';
       }
-    } else {
-      echo '<script>alert(\'Mail gia in uso\')</script>';
-      pg_close($db);
-      header("location: ../html/index.html");
     }
+    pg_close($db);
+    header("location: ./index.php");
   }
 ?>

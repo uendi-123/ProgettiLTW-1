@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -47,8 +51,33 @@
 
                     <div class="row nav-footer mt-3 border border-0 border-top border-secondary">
                         <div class="col-lg-3 btn-group mt-2">
-                            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>
-                            <button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>
+                            <?php 
+                                // if(isset($_SESSION['errorMsg'])){
+                                //     echo '<script>confirm('.$_SESSION['errorMsg'].')</script>';
+                                // } else if(isset($_SESSION['successRegMsg'])){
+                                //     echo '<script>confirm('.$_SESSION['successRegMsg'].')</script>';
+                                // }
+
+                                //Post Registrazione
+                                if(isset($_SESSION['errorReg'])){
+                                    destroySessionAndGoBack($_SESSION['errorReg']);
+                                } else if(isset($_SESSION['successReg'])){
+                                    destroySessionAndGoBack($_SESSION['successReg']);
+                                }
+                                //Post Login
+                                if(isset($_SESSION['errorLogin'])){
+                                    destroySessionAndGoBack($_SESSION['errorLogin']);
+                                } else if(isset($_SESSION['successLogin'])){
+                                    echo '<script>alert("'.$_SESSION['successLogin'].'");</script>';
+                                }
+                                
+                                if(!isset($_SESSION['user'])){
+                                    echo '<button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>';
+                                    echo '<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>';
+                                } else {
+                                    echo '<a class="btn btn-outline-danger" href="logout.php">Logout</a>';
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -278,3 +307,12 @@
         </div>
     </body>    
 </html>
+
+<?php 
+    function destroySessionAndGoBack($msg){
+        $_SESSION = array();
+        session_destroy();
+        echo '<script>alert("'.$msg.'");</script>';
+        session_start(); 
+    }
+?>
