@@ -230,20 +230,54 @@ session_start();
                     </div>
                 </div>
             </div>
-        </nav>
+    </nav>
 
         <div class="container mt-2">
             <!-- Row btn Filtra e Ordina -->
           <div class="row d-flex">
               <div class="col-lg-3 col-md-4 col-sm-6">
-                <button class="btn btn-outline-primary buttone">Filtra</button>
+                <button class="btn btn-outline-primary buttone" data-bs-toggle="collapse" data-bs-target="#collapseFiltra" aria-expanded="false" aria-controls="collapseExample">Filtra</button>
               </div>
               <div class="col-lg-6 col-md-4 d-sm-none d-md-flex d-lg-flex"></div>
               <div class="col-lg-3 col-md-4 col-sm-6">
-                <button class="btn btn-outline-success buttone">Ordina</button>
+                <button class="btn btn-outline-success buttone data-bs-toggle="collapse" data-bs-target="#collapseOrdina" aria-expanded="false" aria-controls="collapseExample">Ordina</button>
               </div>
           </div>
-          <div class="row">
+          <div class="row mt-2">
+              <div class="bg-light col-lg-6 col-md-6 col-sm-6 collapse px-0 border rounded-3" id="collapseFiltra">
+                  <div class="container mx-2">
+
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <label for="selectMarchio" class="col-form-label">Marchio: </label>
+                        </div>
+                        <div class="col-9">
+                            <select id="selectMarchio" class="form-select" aria-label="Default select example">
+                                <option valeu="default" selected>Scegli il marchio</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Citroen">Citroen</option>
+                                <option value="Fiat">Fiat</option>
+                                <option value="Ford">Ford</option>
+                                <option value="Jeep">Jeep</option>
+                                <option value="Kia">Kia</option>
+                                <option value="Lancia">Lancia</option>
+                                <option value="Maserati">Maserati</option>
+                                <option value="Opel">Opel</option>
+                                <option value="Peugeot">Peugeot</option>
+                                <option value="Renault">Renault</option>
+                                <option value="Skoda">Skoda</option>
+                                <option value="Smart">Smart</option>
+                                <option value="Toyota">Fiat</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+
+                    </div> -->
+                </div>
+            </div>
+              <div class="col-lg-6 col-md-6 col-sm-6" id="collapseOrdina"></div>
+
           </div>
           <!-- Row Cards -->
           <div class="row mt-3">
