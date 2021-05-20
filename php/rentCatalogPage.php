@@ -1,57 +1,55 @@
 <?php
     session_start();
     $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error());
-
-    echo '<table>';
-    foreach ($_POST as $key => $value) {
-        echo "<tr>";
-        echo "<td>";
-        echo $key;
-        echo "</td>";
-        echo "<td>";
-        echo $value;
-        echo "</td>";
-        echo "</tr>";
+    $checkAfterWhere = false;
+    $firstAND = false;
+    if(isset($_POST['cittaNoleggio'])){
+        $_SESSION['cittaNoleggio'] = $_POST['cittaNoleggio'];
+        $_SESSION['dataDa'] = $_POST['dataDa'];
+        $_SESSION['dataA'] = $_POST['dataA'];
     }
-    echo '</table>';
 
-    if(!isset($_POST['btnApplica'])){
-        if($_POST['btnApplica'] == null){
-            $firstAND = false;
-            $query = "SELECT nome, marchio, cilindrata, posti, cambio FROM auto"; 
-        }
-    } else {
-        $query = "SELECT nome, marchio, cilindrata, posti, cambio FROM auto WHERE ";
+    $query =   "SELECT nome, marchio, cilindrata, posti, cambio, datada, dataa
+                FROM auto a, (SELECT carid, datada, dataa
+                                FROM cittaauto
+                                WHERE nome = '" . $_SESSION['cittaNoleggio'] . "' AND datada <= '". $_SESSION['dataDa']."' AND dataa >= '". $_SESSION['dataA'] ."' ) t
+            WHERE a.id = t.carid ";
 
+    echo $query;
+
+    //Algoritmo Filtra e Ordina
+    if(isset($_POST['btnApplica'])){
         if(isset($_POST["marchio"]) && $_POST["marchio"] != "null"){
-            $query .= "marchio = '" . $_POST["marchio"] . "' ";
-            $firstAND = true;
+            $query .= "AND marchio = '" . $_POST["marchio"] . "' ";
         }
         if(isset($_POST["posti"]) && $_POST["posti"] != "null"){
-            if($firstAND == true) $query .= 'AND ';
-            else $firstAND = true;
-
-            $query .= "posti = '" . $_POST["posti"] . "' ";
+            $query .= "AND posti = '" . $_POST["posti"] . "' ";
         }
         if(isset($_POST["cilindrataDa"]) && $_POST["cilindrataDa"] != "null"){
-            if($firstAND == true) $query .= 'AND ';
-            else $firstAND = true;
-            $query .= "cilindrata >= '" . $_POST["cilindrataDa"] . "' ";
+            $query .= "AND cilindrata >= '" . $_POST["cilindrataDa"] . "' ";
         }
         if(isset($_POST["cilindrataA"]) && $_POST["cilindrataA"] != "null"){
-            if($firstAND == true) $query .= 'AND ';
-            else $firstAND = true;
-            $query .= "cilindrata <= '" . $_POST["cilindrataA"] . "' ";
+            $query .= "AND cilindrata <= '" . $_POST["cilindrataA"] . "' ";
         }
         if(isset($_POST["cambio"]) && $_POST["cambio"] != "null"){
-            if($firstAND == true) $query .= 'AND ';
-            else $firstAND = true;
-            $query .= "cambio = '" . $_POST["cambio"] . "'";
+            $query .= "AND cambio = '" . $_POST["cambio"] . "' ";
+        }
+        // Ordina per
+        if(isset($_POST["flexRadioOrdina"])){
+            $checkValues = $_POST["flexRadioOrdina"];
+            
+            $checkLenght = count($checkValues);
+            if($checkLenght > 0) $query .= 'ORDER BY ';
+        
+            for($i = 0; $i < $checkLenght; $i++){
+                if($i == $checkLenght - 1) $query .= $checkValues[$i];
+                else{
+                    $query .= $checkValues[$i] . ', ';
+                }
+            }
         }
     }
-
-    $_POST['btnApplica'] = null;
-    echo '<p class="text-light">'.$query.'</p>';
+    
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     //Salvo sulla session la pagina corrente cosi da poterci tornare in caso di login da tale pagina
     $_SESSION['currentPage'] = 'rentCatalogPage.php';
@@ -283,122 +281,151 @@
 
         <div class="container mt-2 px-0">
             <!-- Row btn Filtra e Ordina -->
-          <div class="row d-flex">
-              <div class="col-lg-3 col-md-4 col-sm-6">
-                <button class="btn btn-outline-primary buttone" data-bs-toggle="collapse" data-bs-target="#collapseFiltra" aria-expanded="false" aria-controls="collapseExample">Filtra</button>
-              </div>
-              <div class="col-lg-6 col-md-4 d-sm-none d-md-flex d-lg-flex"></div>
-              <div class="col-lg-3 col-md-4 col-sm-6">
-                <button class="btn btn-outline-success buttone" data-bs-toggle="collapse" data-bs-target="#collapseOrdina" aria-expanded="false" aria-controls="collapseExample">Ordina</button>
-              </div>
-          </div>
-          <div class="row mx-0 mt-2">
-              <div class="bg-light col-lg-6 col-md-6 col-sm-6 collapse px-0 border rounded-3" id="collapseFiltra">
-                  <div class="container mb-2">
-                    <form method="POST" action="./rentCatalogPage.php">
-                        <div class="row align-items-center">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <label for="selectMarchio" class="col-form-label px-0">Marchio: </label>
-                                <select name="marchio" id="selectMarchio" class="form-select form-select-sm" aria-label="Default select example">
-                                    <option value="null" selected>Scegli il marchio</option>
-                                    <option value="BMW">BMW</option>
-                                    <option value="Citroen">Citroen</option>
-                                    <option value="Fiat">Fiat</option>
-                                    <option value="Ford">Ford</option>
-                                    <option value="Jeep">Jeep</option>
-                                    <option value="Kia">Kia</option>
-                                    <option value="Lancia">Lancia</option>
-                                    <option value="Maserati">Maserati</option>
-                                    <option value="Opel">Opel</option>
-                                    <option value="Peugeot">Peugeot</option>
-                                    <option value="Renault">Renault</option>
-                                    <option value="Skoda">Skoda</option>
-                                    <option value="Smart">Smart</option>
-                                    <option value="Fiat">Fiat</option>
-                                    <option value="Toyota">Toyota</option>
-                                </select>
+            <div class="row d-flex">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <button id="btnFiltraOrdina" class="btn bg-light rounded-1 buttone" data-bs-toggle="collapse" data-bs-target="#collapseFiltraOrdina" aria-expanded="false" aria-controls="collapseExample">Filtra</button>
+                </div>
+                <div class="col-lg-6 col-md-4 d-sm-none d-md-flex d-lg-flex"></div>
+            </div>
+            <!-- Row div Filtra e Ordina -->
+            <div class="row mx-0">
+                <!-- Div Filtra e Ordina -->
+                <div class="bg-light col-lg-9 col-md-12 col-sm-12 collapse px-0 rounded-0 rounded-end" id="collapseFiltraOrdina">
+                    <div class="container mb-2">
+                        <form method="POST" action="./rentCatalogPage.php">
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <label for="selectMarchio" class="col-form-label">Marchio: </label>
+                                    <select name="marchio" id="selectMarchio" class="form-select form-select-sm" aria-label="Default select example">
+                                        <option value="null" selected>Scegli il marchio</option>
+                                        <option value="BMW">BMW</option>
+                                        <option value="Citroen">Citroen</option>
+                                        <option value="Fiat">Fiat</option>
+                                        <option value="Ford">Ford</option>
+                                        <option value="Jeep">Jeep</option>
+                                        <option value="Kia">Kia</option>
+                                        <option value="Lancia">Lancia</option>
+                                        <option value="Maserati">Maserati</option>
+                                        <option value="Opel">Opel</option>
+                                        <option value="Peugeot">Peugeot</option>
+                                        <option value="Renault">Renault</option>
+                                        <option value="Skoda">Skoda</option>
+                                        <option value="Smart">Smart</option>
+                                        <option value="Fiat">Fiat</option>
+                                        <option value="Toyota">Toyota</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <label for="selectPosti" class="col-form-label">Posti: </label>
+                                    <select name="posti" id="selectPosti" class="form-select form-select-sm" aria-label="Default select example">
+                                        <!-- echo '<option value = '. null .'  selected>Scegli posti</option> -->
+                                        <option value = "null" selected>Scegli posti</option>
+                                        <option value="2">2</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <label for="selectCambio" class="col-form-label">Cambio:</label>
+                                    <select name="cambio" id="selectCambio" class="form-select form-select-sm" aria-label="Default select example">
+                                        <option value = 'null' selected >...</option>
+                                        <option value="manuale">manuale</option>
+                                        <option value="automatico">automatico</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <label for="selectPosti" class="col-form-label px-0">Posti: </label>
-                                <select name="posti" id="selectPosti" class="form-select form-select-sm" aria-label="Default select example">
-                                    <!-- echo '<option value = '. null .'  selected>Scegli posti</option> -->
-                                    <option value = "null" selected>Scegli posti</option>
-                                    <option value="2">2</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
+                            <div class="row align-items-center">
+                                <div class="col-xl-10 col-lg-10 col-lg-9 col-md-9 col-sm-12">
+                                    <div class="row d-flex">
+                                        <div class="col-6">
+                                            <label for="cilindrataDa" class="col-form-label">Cilindrata da: </label>
+                                            <select name="cilindrataDa" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option value = 'null' selected>...</option>
+                                                <option value="1000">1000</option>
+                                                <option value="1400">1400</option>
+                                                <option value="1600">1600</option>
+                                                <option value="1800">1800</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="cilindrataA" class="col-form-label">a: </label>
+                                            <select name="cilindrataA" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option value = 'null'  selected>...</option>
+                                                <option value="1400">1400</option>
+                                                <option value="1600">1600</option>
+                                                <option value="1800">1800</option>
+                                                <option value="2000">2000</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Col Ordina -->
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-12 d-grid">
+                                    <label for="radioDiv" class="col-form-label me-2">Ordina per: </label>
+                                    <div class="row px-0 d-lg-grid d-md-grid d-sm-inline-flex" id="radioDiv">
+                                        <div class="col-lg-auto col-md-auto col-sm-3 d-inline-flex">
+                                            <input class="form-check-input me-1" type="checkbox" value="marchio" name="flexRadioOrdina[]" id="radioMarchio" checked>
+                                            <label class="form-check-label" for="radioMarchio">
+                                                Marchio
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-auto col-md-auto col-sm-3 d-inline-flex">
+                                            <input class="form-check-input me-1" type="checkbox" value="cilindrata" name="flexRadioOrdina[]" id="radioCilindrata">
+                                            <label class="form-check-label" for="radioCilindrata">
+                                                Cilindrata
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-auto col-md-auto col-sm-3 d-inline-flex">
+                                            <input class="form-check-input me-1" type="checkbox" value="posti" name="flexRadioOrdina[]" id="radioPosti">
+                                            <label class="form-check-label" for="radioPosti">
+                                                Posti
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-lg-6 col-md-6 col-sm-12" id="cilindrataDaDiv">
-                                <label for="cilindrataDa">Cilindrata da: </label>
-                                <select name="cilindrataDa" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <!-- echo '<option value = '. null .'  selected>...</option> -->
-                                    <option value = 'null' selected>...</option>
-                                    <option value="1400">1000</option>
-                                    <option value="1400">1400</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-12 mt-2 ps-2 align-items-end">
+                                    <label for="btnApplica" class="col-form-label"></label>
+                                    <button id="btnApplica" class="btn btn-outline-success" name="btnApplica">Applica</button>
+                                </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12" id="CilindrataADiv">
-                                <label for="cilindrataA">a: </label>
-                                <select name="cilindrataA" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <!-- echo '<option value = '. null .'  selected>...</option> -->
-                                    <option value = 'null'  selected>...</option>
-                                    <option value="1400">1400</option>
-                                    <option value="1600">1600</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <label for="">Cambio:</label>
-                                <select name="cambio" id="selectCambio" class="form-select form-select-sm" aria-label="Default select example">
-                                    <!-- echo '<option value = '. null .'  selected>...</option>' -->
-                                    <option value = 'null' selected >...</option>
-                                    <option value="manuale">manuale</option>
-                                    <option value="automatico">automatico</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 mt-2 ps-2 align-items-end">
-                                <label for="btnApplica"></label>
-                                <button id="btnApplica" class="btn btn-outline-success" name="btnApplica">Applica</button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6" id="collapseOrdina"></div>
-
-          </div>
-          <!-- Row Cards -->
+          <!-- Row Cards delle Auto -->
           <div class="row mt-3">
                     <?php
-                        for($i = 0; $i < pg_num_rows($result); $i++){
-                            $row = pg_fetch_row($result);
-
-                            $nome = $row[0];
-                            $marchio = $row[1];
-                            $img = $marchio.$nome.'.jpg';
-                            $cilindrata = $row[2];
-                            $posti = $row[3];
-                            $cambio = $row[4];
-                            // Aumentare card height ad SM, provare con media-queries
-                            echo '<div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark ">';
-                            echo    '<img src="../img/imgAuto/'. $img .'" class="card-img-top mt-1 fluidImg mx-1" alt="...">';
-                            echo    '<div class="card-body">';
-                            echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' ."$marchio $nome" .'</h5>';
-                            echo        '<p class="card-text">
-                                                            <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $cilindrata.'</br>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
-                                                            Posti: '. $posti.'</br>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
-                                                            Cambio: '. $cambio.'</p>';
-                            echo    '</div>';
-                            echo '</div>';
-                            echo '';
+                        if(pg_num_rows($result) > 0){
+                            for($i = 0; $i < pg_num_rows($result); $i++){
+                                $row = pg_fetch_row($result);
+    
+                                $nome = $row[0];
+                                $marchio = $row[1];
+                                $img = $marchio.$nome.'.jpg';
+                                $cilindrata = $row[2];
+                                $posti = $row[3];
+                                $cambio = $row[4];
+                                // Aumentare card height ad SM, provare con media-queries
+                                echo '<div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark ">';
+                                echo    '<img src="../img/imgAuto/'. $img .'" class="card-img-top mt-1 fluidImg mx-1" alt="...">';
+                                echo    '<div class="card-body">';
+                                echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' ."$marchio $nome" .'</h5>';
+                                echo        '<p class="card-text">
+                                                                <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $cilindrata.'</br>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
+                                                                Posti: '. $posti.'</br>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
+                                                                Cambio: '. $cambio.'</p>';
+                                echo    '</div>';
+                                echo '</div>';
+                                echo '';
+                            }
+                        } else {
+                            echo '<p class="text-center text-light">Nessun risultato trovato</p>';
                         }
+                        
                     ?>
                 </div>
           </div>

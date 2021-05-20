@@ -72,6 +72,20 @@ $(document).ready(function(){
     //     }
     // });
 
+    $('#btnFiltraOrdina').click(function(){
+        if($(this).hasClass('rounded-top')){
+            $(this).removeClass('rounded-top');
+            $(this).removeClass('rounded-0');
+            $(this).addClass('rounded-1');
+        } else if($(this).hasClass('rounded-1')){
+            $(this).removeClass('rounded-1');
+            $(this).addClass('rounded-0');
+            $(this).addClass('rounded-top');
+            
+        }
+        
+    })
+
     //SignUp Validation
     //La seguente istruzione mette nell'array tutti gli elem <input> del form
     var InputToCheckSignUp = $('#SignUpForm input');
