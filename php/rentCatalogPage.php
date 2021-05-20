@@ -1,8 +1,57 @@
 <?php
-session_start();
-    $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error()); 
+    session_start();
+    $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error());
 
-    $query = "SELECT nome, marchio, cilindrata, posti, cambio FROM auto "; 
+    echo '<table>';
+    foreach ($_POST as $key => $value) {
+        echo "<tr>";
+        echo "<td>";
+        echo $key;
+        echo "</td>";
+        echo "<td>";
+        echo $value;
+        echo "</td>";
+        echo "</tr>";
+    }
+    echo '</table>';
+
+    if(!isset($_POST['btnApplica'])){
+        if($_POST['btnApplica'] == null){
+            $firstAND = false;
+            $query = "SELECT nome, marchio, cilindrata, posti, cambio FROM auto"; 
+        }
+    } else {
+        $query = "SELECT nome, marchio, cilindrata, posti, cambio FROM auto WHERE ";
+
+        if(isset($_POST["marchio"]) && $_POST["marchio"] != "null"){
+            $query .= "marchio = '" . $_POST["marchio"] . "' ";
+            $firstAND = true;
+        }
+        if(isset($_POST["posti"]) && $_POST["posti"] != "null"){
+            if($firstAND == true) $query .= 'AND ';
+            else $firstAND = true;
+
+            $query .= "posti = '" . $_POST["posti"] . "' ";
+        }
+        if(isset($_POST["cilindrataDa"]) && $_POST["cilindrataDa"] != "null"){
+            if($firstAND == true) $query .= 'AND ';
+            else $firstAND = true;
+            $query .= "cilindrata >= '" . $_POST["cilindrataDa"] . "' ";
+        }
+        if(isset($_POST["cilindrataA"]) && $_POST["cilindrataA"] != "null"){
+            if($firstAND == true) $query .= 'AND ';
+            else $firstAND = true;
+            $query .= "cilindrata <= '" . $_POST["cilindrataA"] . "' ";
+        }
+        if(isset($_POST["cambio"]) && $_POST["cambio"] != "null"){
+            if($firstAND == true) $query .= 'AND ';
+            else $firstAND = true;
+            $query .= "cambio = '" . $_POST["cambio"] . "'";
+        }
+    }
+
+    $_POST['btnApplica'] = null;
+    echo '<p class="text-light">'.$query.'</p>';
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
     //Salvo sulla session la pagina corrente cosi da poterci tornare in caso di login da tale pagina
     $_SESSION['currentPage'] = 'rentCatalogPage.php';
@@ -232,7 +281,7 @@ session_start();
             </div>
     </nav>
 
-        <div class="container mt-2">
+        <div class="container mt-2 px-0">
             <!-- Row btn Filtra e Ordina -->
           <div class="row d-flex">
               <div class="col-lg-3 col-md-4 col-sm-6">
@@ -240,43 +289,87 @@ session_start();
               </div>
               <div class="col-lg-6 col-md-4 d-sm-none d-md-flex d-lg-flex"></div>
               <div class="col-lg-3 col-md-4 col-sm-6">
-                <button class="btn btn-outline-success buttone data-bs-toggle="collapse" data-bs-target="#collapseOrdina" aria-expanded="false" aria-controls="collapseExample">Ordina</button>
+                <button class="btn btn-outline-success buttone" data-bs-toggle="collapse" data-bs-target="#collapseOrdina" aria-expanded="false" aria-controls="collapseExample">Ordina</button>
               </div>
           </div>
-          <div class="row mt-2">
+          <div class="row mx-0 mt-2">
               <div class="bg-light col-lg-6 col-md-6 col-sm-6 collapse px-0 border rounded-3" id="collapseFiltra">
-                  <div class="container mx-2">
-
-                    <div class="row align-items-center">
-                        <div class="col-3">
-                            <label for="selectMarchio" class="col-form-label">Marchio: </label>
+                  <div class="container mb-2">
+                    <form method="POST" action="./rentCatalogPage.php">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="selectMarchio" class="col-form-label px-0">Marchio: </label>
+                                <select name="marchio" id="selectMarchio" class="form-select form-select-sm" aria-label="Default select example">
+                                    <option value="null" selected>Scegli il marchio</option>
+                                    <option value="BMW">BMW</option>
+                                    <option value="Citroen">Citroen</option>
+                                    <option value="Fiat">Fiat</option>
+                                    <option value="Ford">Ford</option>
+                                    <option value="Jeep">Jeep</option>
+                                    <option value="Kia">Kia</option>
+                                    <option value="Lancia">Lancia</option>
+                                    <option value="Maserati">Maserati</option>
+                                    <option value="Opel">Opel</option>
+                                    <option value="Peugeot">Peugeot</option>
+                                    <option value="Renault">Renault</option>
+                                    <option value="Skoda">Skoda</option>
+                                    <option value="Smart">Smart</option>
+                                    <option value="Fiat">Fiat</option>
+                                    <option value="Toyota">Toyota</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="selectPosti" class="col-form-label px-0">Posti: </label>
+                                <select name="posti" id="selectPosti" class="form-select form-select-sm" aria-label="Default select example">
+                                    <!-- echo '<option value = '. null .'  selected>Scegli posti</option> -->
+                                    <option value = "null" selected>Scegli posti</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-9">
-                            <select id="selectMarchio" class="form-select" aria-label="Default select example">
-                                <option valeu="default" selected>Scegli il marchio</option>
-                                <option value="BMW">BMW</option>
-                                <option value="Citroen">Citroen</option>
-                                <option value="Fiat">Fiat</option>
-                                <option value="Ford">Ford</option>
-                                <option value="Jeep">Jeep</option>
-                                <option value="Kia">Kia</option>
-                                <option value="Lancia">Lancia</option>
-                                <option value="Maserati">Maserati</option>
-                                <option value="Opel">Opel</option>
-                                <option value="Peugeot">Peugeot</option>
-                                <option value="Renault">Renault</option>
-                                <option value="Skoda">Skoda</option>
-                                <option value="Smart">Smart</option>
-                                <option value="Toyota">Fiat</option>
-                            </select>
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-6 col-sm-12" id="cilindrataDaDiv">
+                                <label for="cilindrataDa">Cilindrata da: </label>
+                                <select name="cilindrataDa" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <!-- echo '<option value = '. null .'  selected>...</option> -->
+                                    <option value = 'null' selected>...</option>
+                                    <option value="1400">1000</option>
+                                    <option value="1400">1400</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12" id="CilindrataADiv">
+                                <label for="cilindrataA">a: </label>
+                                <select name="cilindrataA" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <!-- echo '<option value = '. null .'  selected>...</option> -->
+                                    <option value = 'null'  selected>...</option>
+                                    <option value="1400">1400</option>
+                                    <option value="1600">1600</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <!-- <div class="row">
-
-                    </div> -->
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <label for="">Cambio:</label>
+                                <select name="cambio" id="selectCambio" class="form-select form-select-sm" aria-label="Default select example">
+                                    <!-- echo '<option value = '. null .'  selected>...</option>' -->
+                                    <option value = 'null' selected >...</option>
+                                    <option value="manuale">manuale</option>
+                                    <option value="automatico">automatico</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2 ps-2 align-items-end">
+                                <label for="btnApplica"></label>
+                                <button id="btnApplica" class="btn btn-outline-success" name="btnApplica">Applica</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-              <div class="col-lg-6 col-md-6 col-sm-6" id="collapseOrdina"></div>
+            <div class="col-lg-6 col-md-6 col-sm-6" id="collapseOrdina"></div>
 
           </div>
           <!-- Row Cards -->
