@@ -482,7 +482,14 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button id="ConfermaPagaBtn" class="btn btn-outline-success">Conferma e Paga</button>
+                                <?php 
+                                    if(isset($_SESSION['user'])){
+                                        echo '<button id="ConfermaPagaBtn" class="btn btn-outline-success">Conferma e Paga</button>';
+                                    } else {
+                                        echo '<p class="text-danger">Accedi per prenotare!</p>';
+                                    }
+                                ?>
+                                
                             </div>
                         </div>
                     </div>
