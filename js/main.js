@@ -163,6 +163,60 @@ $(document).ready(function(){
             invalidButton('#noleggioSubmitBtn', check);
         })
     })
+
+    $('#ordinaAutoBtn').click(function(){
+        var val = document.querySelector('#ordinaAutoBtn');
+        console.log(val.dataset.autovalue);
+        var values = JSON.parse(val.dataset.autovalue);
+
+        console.log(values.toString());
+
+        $('#imgOrdine').attr('src', '../img/imgAuto/' + values['img']);
+        $('#pCilindrataOrdine').html('<b>Cilindrata:</b> ' + values['cilindrata'] + 'cc');
+        $('#pPostiOrdine').html('<b>Posti:</b> ' + values['posti']);
+        $('#pCambioOrdine').html('<b>Cambio:</b> ' + values['cambio']);
+    })
+
+    $('#ConfermaPagaBtn').click(function(){
+        $('#autoOrdinaModal').modal('hide');
+        $('#creditCardModal').modal('show');
+
+    })
+
+    $('form').card({
+        form: '#creditCardForm',
+        container: '#containerCard',
+        formSelectors: {
+            numberInput: 'input#number', // optional — default input[name="number"]
+            expiryInput: 'input#expiry', // optional — default input[name="expiry"]
+            cvcInput: 'input#cvc', // optional — default input[name="cvc"]
+            nameInput: 'input#name' // optional - defaults input[name="name"]
+        },
+    
+        width: 200, // optional — default 350px
+        formatting: false, // optional - default true
+    
+        // Strings for translation - optional
+        messages: {
+            validDate: 'valid\ndate', // optional - default 'valid\nthru'
+            monthYear: 'mm/yyyy', // optional - default 'month/year'
+        },
+    
+        // Default placeholders for rendered fields - optional
+        placeholders: {
+            number: '•••• •••• •••• ••••',
+            name: 'Full Name',
+            expiry: '••/••',
+            cvc: '•••'
+        },
+    
+        masks: {
+            cardNumber: '•' // optional - mask card number
+        },
+    
+        // if true, will log helpful messages for setting up Card
+        debug: false // optional - default false
+    });
 })
 
 let hideShowPass = el => {

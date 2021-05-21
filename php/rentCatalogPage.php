@@ -7,6 +7,7 @@
         $_SESSION['cittaNoleggio'] = $_POST['cittaNoleggio'];
         $_SESSION['dataDa'] = $_POST['dataDa'];
         $_SESSION['dataA'] = $_POST['dataA'];
+        $_SESSION['sessionAuto'] = array();
     }
 
     $query =   "SELECT nome, marchio, cilindrata, posti, cambio, datada, dataa
@@ -15,7 +16,7 @@
                                 WHERE nome = '" . $_SESSION['cittaNoleggio'] . "' AND datada <= '". $_SESSION['dataDa']."' AND dataa >= '". $_SESSION['dataA'] ."' ) t
             WHERE a.id = t.carid ";
 
-    echo $query;
+    // echo $query;
 
     //Algoritmo Filtra e Ordina
     if(isset($_POST['btnApplica'])){
@@ -77,8 +78,9 @@
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
         <script src="../js/main.js"></script>
+        <script src="../card-master/dist/jquery.card.js"></script>
     </head>
-    <body class="bg-dark">
+    <body class="bg-light">
     <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
             <div class="container-fluid">
                 <a class="navbar-brand fs-2 logo" href="index.php">RentACar.com</a>
@@ -394,41 +396,115 @@
                     </div>
                 </div>
             </div>
-          <!-- Row Cards delle Auto -->
-          <div class="row mt-3">
-                    <?php
-                        if(pg_num_rows($result) > 0){
-                            for($i = 0; $i < pg_num_rows($result); $i++){
-                                $row = pg_fetch_row($result);
-    
-                                $nome = $row[0];
-                                $marchio = $row[1];
-                                $img = $marchio.$nome.'.jpg';
-                                $cilindrata = $row[2];
-                                $posti = $row[3];
-                                $cambio = $row[4];
-                                // Aumentare card height ad SM, provare con media-queries
-                                echo '<div class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark ">';
-                                echo    '<img src="../img/imgAuto/'. $img .'" class="card-img-top mt-1 fluidImg mx-1" alt="...">';
-                                echo    '<div class="card-body">';
-                                echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' ."$marchio $nome" .'</h5>';
-                                echo        '<p class="card-text">
-                                                                <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $cilindrata.'</br>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
-                                                                Posti: '. $posti.'</br>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
-                                                                Cambio: '. $cambio.'</p>';
-                                echo    '</div>';
-                                echo '</div>';
-                                echo '';
-                            }
-                        } else {
-                            echo '<p class="text-center text-light">Nessun risultato trovato</p>';
+            <!-- Row Cards delle Auto -->
+            <div class="row mt-3">
+                <?php
+                    if(pg_num_rows($result) > 0){
+                        for($i = 0; $i < pg_num_rows($result); $i++){
+                            $row = pg_fetch_row($result);
+
+                            // foreach($row as $value => $key){
+                            //     echo $key;
+                            // }
+
+                            $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'] = array(
+                                'nome' => $row[0],
+                                'marchio' => $row[1],
+                                'img' => $row[1] . $row[0]. '.jpg',
+                                'cilindrata' => $row[2],
+                                'posti' => $row[3],
+                                'cambio' => $row[4],
+                            );
+
+                            $autoValues = $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'];
+                            $x = json_encode($autoValues);
+                            $y = json_decode($x);
+
+                            // Aumentare card height ad SM, provare con media-queries
+                            echo '<div id=card'. $autoValues['nome'] . $autoValues['marchio'] .' class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark px-0">';
+                            echo    '<img src="../img/imgAuto/'. $autoValues['img'] .'" class="card-img-top mt-1 fluidImg px-1" alt="NO IMAGE">';
+                            echo    '<div class="card-body">';
+                            echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' ."" .'</h5>';
+                            echo        '<p class="card-text">
+                                            <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $autoValues['cilindrata'].'</br>
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
+                                            Posti: '. $autoValues['posti'].'</br>
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
+                                            Cambio: '. $autoValues['cambio'].'</p>';
+                            echo    '</div>';
+                            echo    '<div class="card-footer text-muted">';
+                            echo        '<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#autoOrdinaModal" data-autoValue='. json_encode($autoValues) .' id="ordinaAutoBtn">Ordina</button>';
+                            echo    '</div>';
+                            echo '</div>';
                         }
-                        
-                    ?>
+                    } else {
+                        echo '<p class="text-center text-light">Nessun risultato trovato</p>';
+                    }
+                ?>
+                <div class="modal fade" id="autoOrdinaModal" tabindex="-1" aria-hidden="true">
+                    <!-- SISTEMARE CASO SM -->
+                    <div class="modal-dialog modal-fullscreen-sm-down">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitle">Conferma Ordine</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container d-inline-flex">
+                                    <div class="col-6">
+                                        <img class="fluidImgOrdina" id="imgOrdine" src="" alt="NO IMAGE">
+                                    </div>
+                                    <div class="col-6 d-grid">
+                                        <div class="row d-inline-flex">
+                                            <div class="col-auto">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="2em" height="2em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 4C6.486 4 2 8.486 2 14a9.89 9.89 0 0 0 1.051 4.445c.17.34.516.555.895.555h16.107c.379 0 .726-.215.896-.555A9.89 9.89 0 0 0 22 14c0-5.514-4.486-10-10-10zm7.41 13H4.59A7.875 7.875 0 0 1 4 14c0-4.411 3.589-8 8-8s8 3.589 8 8a7.875 7.875 0 0 1-.59 3z" fill="#626262"/><path d="M10.939 12.939a1.53 1.53 0 0 0 0 2.561a1.53 1.53 0 0 0 2.121-.44l3.962-6.038a.034.034 0 0 0 0-.035a.033.033 0 0 0-.045-.01l-6.038 3.962z" fill="#626262"/></svg>
+                                            </div>
+                                            <div class="col-auto">
+                                                <p id="pCilindrataOrdine"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row d-inline-flex">
+                                            <div class="col-auto">
+                                                <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="2em" height="2em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
+                                            </div>
+                                            <div class="col-auto">
+                                                <p id="pPostiOrdine"></p>
+                                            </div>
+                                        </div>
+                                        <div class="row d-inline-flex">
+                                            <div class="col-auto">
+                                                <svg class="mb-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="2em" height="2em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
+                                            </div>
+                                            <div class="col-auto">
+                                                <p id="pCambioOrdine"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="ConfermaPagaBtn" class="btn btn-outline-success">Conferma e Paga</button>
+                            </div>
+
+                            <div class="modal" id="creditCardModal">
+                                <div class="modal-content">
+                                    <div id="containerCard" class="modal-body">
+                                        <form id="creditCardForm">
+                                            <input type="text" name="number">
+                                            <input type="text" name="first-name"/>
+                                            <input type="text" name="last-name"/>
+                                            <input type="text" name="expiry"/>
+                                            <input type="text" name="cvc"/>
+                                        </form> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-          </div>
+
+                
+            </div>
         </div>
     </body>
 </html>
