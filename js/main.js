@@ -1,3 +1,5 @@
+let arrayCars = {};
+
 $(document).ready(function(){
     //$('#dinamicDiv').load('../html/offerte.html');
     //Input che fanno uso dell'API Datepicker
@@ -166,22 +168,39 @@ $(document).ready(function(){
 
     $('#rowCard .btn').click(function(){
         var values = JSON.parse($(this).attr('data-autovalue'));
-        console.log($(this).attr('data-autovalue'));
-        // var values = JSON.parse(val.dataset.autovalue);
+        //Salvo l'oggetto macchina corrente nel array global arrayCars cosi da usarlo in caso di ordine
+        if(arrayCars[values['marchio'] + values['nome']] == null){
+            arrayCars[values['marchio']+values['nome']] = values;
+        }
 
-        // console.log(values.toString());
+        console.log($(this).attr('data-autovalue'));
 
         $('#imgOrdine').attr('src', '../img/imgAuto/' + values['img']);
         $('#pCilindrataOrdine').html('<b>Cilindrata:</b> ' + values['cilindrata'] + 'cc');
         $('#pPostiOrdine').html('<b>Posti:</b> ' + values['posti']);
         $('#pCambioOrdine').html('<b>Cambio:</b> ' + values['cambio']);
+
+        $('#ConfermaPagaBtn').attr('data-autoMarchio', values['marchio']);
+        $('#ConfermaPagaBtn').attr('data-autoNome', values['nome']);
     })
 
     $('#ConfermaPagaBtn').click(function(){
         $('#autoOrdinaModal').modal('hide');
         $('#creditCardModal').modal('show');
+        $('#pagaBtn').attr('data-autoMarchio', $(this).attr('data-autoMarchio'));
+        $('#pagaBtn').attr('data-autoNome', $(this).attr('data-autoNome'));
     })
 
+    $('#pagaBtn').click(function(){
+        $marchio = $(this).attr('data-autoMarchio');
+        $nome = $(this).attr('data-autoNome');
+
+        $.ajax({
+            type: "POST",
+            url: "validateOrder.php",
+            data: {values: arrayCars[$marchio + $nome]}
+        })
+    })
 })
 
 let hideShowPass = el => {

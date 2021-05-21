@@ -407,7 +407,7 @@
                                 //     echo $key;
                                 // }
 
-                                $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'] = array(
+                                $_SESSION['sessionAuto'][$row[1] . $row[0]] = array(
                                     'nome' => $row[0],
                                     'marchio' => $row[1],
                                     'img' => $row[1] . $row[0]. '.jpg',
@@ -416,7 +416,7 @@
                                     'cambio' => $row[4],
                                 );
 
-                                $autoValues = $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'];
+                                $autoValues = $_SESSION['sessionAuto'][$row[1] . $row[0]];
 
                                 // Aumentare card height ad SM, provare con media-queries
                                 echo '<div id=card'. $autoValues['marchio'] . $autoValues['nome'] .' class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark px-0">';
@@ -431,7 +431,7 @@
                                                 Cambio: '. $autoValues['cambio'].'</p>';
                                 echo    '</div>';
                                 echo    '<div class="card-footer text-muted">';
-                                echo        '<button class="btn btn-outline-success" id="btn'.$autoValues['marchio'].$autoValues['nome'].'" data-bs-toggle="modal" data-bs-target="#autoOrdinaModal" data-autovalue='. json_encode($autoValues) .'>Ordina</button>';
+                                echo        '<button class="btn btn-outline-success" id="btn-'.$autoValues['marchio'].'-'.$autoValues['nome'].'" data-bs-toggle="modal" data-bs-target="#autoOrdinaModal" data-autovalue='. json_encode($autoValues) .'>Ordina</button>';
                                 echo    '</div>';
                                 echo '</div>';
                             }
@@ -545,6 +545,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-success" id="pagaBtn">Paga</button>
+                                
                             </div>
                         </div>
                     </div>
