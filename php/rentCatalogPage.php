@@ -487,7 +487,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="creditCardModal"  tabindex="-1">
+                <div class="modal fade" id="creditCardModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -537,7 +537,7 @@
                                 </script>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-outline-success" id="pagaBtn">Paga</button>
+                                <button type="button" class="btn btn-outline-success" id="pagaBtn">Paga</button>
                             </div>
                         </div>
                     </div>
@@ -546,7 +546,7 @@
         </div>
     </body>
 </html>
-
+ 
 <?php 
     function destroySessionAndGoBack($msg){
         $_SESSION = array();

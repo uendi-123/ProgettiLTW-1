@@ -182,7 +182,6 @@ $(document).ready(function(){
         $('#creditCardModal').modal('show');
     })
 
-    $()
 })
 
 let hideShowPass = el => {
