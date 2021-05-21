@@ -78,9 +78,8 @@
         <!-- My CSS and JS FILES -->
         <link href="../css/style.css" rel="stylesheet">
         <script src="../js/main.js"></script>
-        <script src="../card-master/dist/jquery.card.js"></script>
     </head>
-    <body class="bg-light">
+    <body class="bg-dark">
     <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
             <div class="container-fluid">
                 <a class="navbar-brand fs-2 logo" href="index.php">RentACar.com</a>
@@ -397,50 +396,50 @@
                 </div>
             </div>
             <!-- Row Cards delle Auto -->
-            <div class="row mt-3">
-                <?php
-                    if(pg_num_rows($result) > 0){
-                        for($i = 0; $i < pg_num_rows($result); $i++){
-                            $row = pg_fetch_row($result);
+            <div>
+                <div class="row mt-3" id = "rowCard">
+                    <?php
+                        if(pg_num_rows($result) > 0){
+                            for($i = 0; $i < pg_num_rows($result); $i++){
+                                $row = pg_fetch_row($result);
 
-                            // foreach($row as $value => $key){
-                            //     echo $key;
-                            // }
+                                // foreach($row as $value => $key){
+                                //     echo $key;
+                                // }
 
-                            $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'] = array(
-                                'nome' => $row[0],
-                                'marchio' => $row[1],
-                                'img' => $row[1] . $row[0]. '.jpg',
-                                'cilindrata' => $row[2],
-                                'posti' => $row[3],
-                                'cambio' => $row[4],
-                            );
+                                $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'] = array(
+                                    'nome' => $row[0],
+                                    'marchio' => $row[1],
+                                    'img' => $row[1] . $row[0]. '.jpg',
+                                    'cilindrata' => $row[2],
+                                    'posti' => $row[3],
+                                    'cambio' => $row[4],
+                                );
 
-                            $autoValues = $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'];
-                            $x = json_encode($autoValues);
-                            $y = json_decode($x);
+                                $autoValues = $_SESSION['sessionAuto'][$row[1] . $row[0] .'card'];
 
-                            // Aumentare card height ad SM, provare con media-queries
-                            echo '<div id=card'. $autoValues['nome'] . $autoValues['marchio'] .' class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark px-0">';
-                            echo    '<img src="../img/imgAuto/'. $autoValues['img'] .'" class="card-img-top mt-1 fluidImg px-1" alt="NO IMAGE">';
-                            echo    '<div class="card-body">';
-                            echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' ."" .'</h5>';
-                            echo        '<p class="card-text">
-                                            <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $autoValues['cilindrata'].'</br>
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
-                                            Posti: '. $autoValues['posti'].'</br>
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
-                                            Cambio: '. $autoValues['cambio'].'</p>';
-                            echo    '</div>';
-                            echo    '<div class="card-footer text-muted">';
-                            echo        '<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#autoOrdinaModal" data-autoValue='. json_encode($autoValues) .' id="ordinaAutoBtn">Ordina</button>';
-                            echo    '</div>';
-                            echo '</div>';
+                                // Aumentare card height ad SM, provare con media-queries
+                                echo '<div id=card'. $autoValues['marchio'] . $autoValues['nome'] .' class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark px-0">';
+                                echo    '<img src="../img/imgAuto/'. $autoValues['img'] .'" class="card-img-top mt-1 fluidImg px-1" alt="NO IMAGE">';
+                                echo    '<div class="card-body">';
+                                echo        '<h5 class="card-title">'.'<i class="fas fa-car"></i> ' . $autoValues['marchio'] . ' ' . $autoValues['nome'] .'</h5>';
+                                echo        '<p class="card-text">
+                                                <i class="fas fa-tachometer-alt"></i> Cilindrata: '. $autoValues['cilindrata'].'</br>
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 4.5C17 5.9 15.9 7 14.5 7S12 5.9 12 4.5S13.1 2 14.5 2S17 3.1 17 4.5M15 8h-.8c-2.1 0-4.1-1.2-5.1-3.1c-.1-.1-.2-.2-.2-.3l-1.8.8c.5 1.4 2.1 3.2 4.4 4.1l-1.8 5l-3.9-1.1L3 18.9l2 .5l1.8-3.6l4.5 1.2c1 .2 2-.3 2.4-1.2L16 9.4c.2-.7-.3-1.4-1-1.4m3.9-1l-3.4 9.4c-.6 1.6-2.1 2.6-3.7 2.6c-.3 0-.7 0-1-.1l-2.9-.8l-.9 1.8l2 .5l1.4.4c.5.1 1 .2 1.5.2c2.5 0 4.7-1.5 5.6-3.9L21 7h-2.1z" fill="black"/></svg>
+                                                Posti: '. $autoValues['posti'].'</br>
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g class="icon-tabler" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="12" cy="18" r="2"/><path d="M5 8v8"/><path d="M12 8v8"/><path d="M19 8v2a2 2 0 0 1-2 2H5"/></g></svg>
+                                                Cambio: '. $autoValues['cambio'].'</p>';
+                                echo    '</div>';
+                                echo    '<div class="card-footer text-muted">';
+                                echo        '<button class="btn btn-outline-success" id="btn'.$autoValues['marchio'].$autoValues['nome'].'" data-bs-toggle="modal" data-bs-target="#autoOrdinaModal" data-autovalue='. json_encode($autoValues) .'>Ordina</button>';
+                                echo    '</div>';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo '<p class="text-center text-light">Nessun risultato trovato</p>';
                         }
-                    } else {
-                        echo '<p class="text-center text-light">Nessun risultato trovato</p>';
-                    }
-                ?>
+                    ?>
+                </div>
                 <div class="modal fade" id="autoOrdinaModal" tabindex="-1" aria-hidden="true">
                     <!-- SISTEMARE CASO SM -->
                     <div class="modal-dialog modal-fullscreen-sm-down">
@@ -485,25 +484,64 @@
                             <div class="modal-footer">
                                 <button id="ConfermaPagaBtn" class="btn btn-outline-success">Conferma e Paga</button>
                             </div>
-
-                            <div class="modal" id="creditCardModal">
-                                <div class="modal-content">
-                                    <div id="containerCard" class="modal-body">
-                                        <form id="creditCardForm">
-                                            <input type="text" name="number">
-                                            <input type="text" name="first-name"/>
-                                            <input type="text" name="last-name"/>
-                                            <input type="text" name="expiry"/>
-                                            <input type="text" name="cvc"/>
-                                        </form> 
-                                    </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="creditCardModal"  tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitle">Inserisci dati carta di credito</h5>
+                            </div>
+                            <div class="container-fluid modal-body d-grid">
+                                <div class="row" id="containerCard">
+                                    <script src="../card-master/dist/card.js"></script>
                                 </div>
+                                    <form id="creditCardForm">
+                                        <div class="container-fluid mt-2">
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <label for="inputName">Titolare: </label>
+                                                    <input class="form-control" id="inputName" type="text" name="name">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="inputNumber">Numero carta: </label>
+                                                    <input class="form-control" id="inputNumber" type="text" name="number">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label for="inputExpiry">Scadenza: </label>
+                                                    <input class="form-control" id="inputExpiry" type="text" name="expiry">
+                                                </div>
+                                                <div class="col">
+                                                    <label for="inputCVC">CVC: </label>
+                                                    <input class="form-control" id="inputCVC" type="text" name="cvc">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                <script>
+                                    var card = new Card({
+                                        form: "#creditCardForm",
+                                        container: '#containerCard',
+                                    
+                                        // Default placeholders for rendered fields - optional
+                                        placeholders: {
+                                            number: '•••• •••• •••• ••••',
+                                            name: 'Full Name',
+                                            expiry: '••/••',
+                                            cvc: '•••'
+                                        },
+                                    });
+                                </script>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-outline-success" id="pagaBtn">Paga</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                
             </div>
         </div>
     </body>
