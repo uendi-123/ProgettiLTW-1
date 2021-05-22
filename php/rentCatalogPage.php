@@ -10,7 +10,7 @@
         $_SESSION['sessionAuto'] = array();
     }
 
-    $query =   "SELECT nome, marchio, cilindrata, posti, cambio, datada, dataa
+    $query =   "SELECT id, nome, marchio, cilindrata, posti, cambio, datada, dataa
                 FROM auto a, (SELECT carid, datada, dataa
                                 FROM cittaauto
                                 WHERE nome = '" . $_SESSION['cittaNoleggio'] . "' AND datada <= '". $_SESSION['dataDa']."' AND dataa >= '". $_SESSION['dataA'] ."' ) t
@@ -403,20 +403,17 @@
                             for($i = 0; $i < pg_num_rows($result); $i++){
                                 $row = pg_fetch_row($result);
 
-                                // foreach($row as $value => $key){
-                                //     echo $key;
-                                // }
-
-                                $_SESSION['sessionAuto'][$row[1] . $row[0]] = array(
-                                    'nome' => $row[0],
-                                    'marchio' => $row[1],
-                                    'img' => $row[1] . $row[0]. '.jpg',
-                                    'cilindrata' => $row[2],
-                                    'posti' => $row[3],
-                                    'cambio' => $row[4],
+                                $_SESSION['sessionAuto'][$row[2] . $row[1]] = array(
+                                    'idcar' => $row[0],
+                                    'nome' => $row[1],
+                                    'marchio' => $row[2],
+                                    'img' => $row[2] . $row[1]. '.jpg',
+                                    'cilindrata' => $row[3],
+                                    'posti' => $row[4],
+                                    'cambio' => $row[5],
                                 );
 
-                                $autoValues = $_SESSION['sessionAuto'][$row[1] . $row[0]];
+                                $autoValues = $_SESSION['sessionAuto'][$row[2] . $row[1]];
 
                                 // Aumentare card height ad SM, provare con media-queries
                                 echo '<div id=card'. $autoValues['marchio'] . $autoValues['nome'] .' class="card col-xl-3 col-lg-4 col-md-6 col-sm-12 border-1 border-dark px-0">';
@@ -545,7 +542,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-success" id="pagaBtn">Paga</button>
-                                
                             </div>
                         </div>
                     </div>

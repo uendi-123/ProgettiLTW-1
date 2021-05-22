@@ -196,11 +196,24 @@ $(document).ready(function(){
         $nome = $(this).attr('data-autoNome');
 
         $.ajax({
-            type: "POST",
-            url: "validateOrder.php",
-            data: {values: arrayCars[$marchio + $nome]}
-        })
-    })
+            type: 'POST',
+            url: '..\\php\\validateOrder.php',
+            data: { marchioNome : $marchio + $nome },
+            success: function() {
+                console.log('OK');
+            },
+            error: function() {
+                console.log('NO');
+            }
+        });
+        
+        $(this).prop('disabled', true);
+        $(this).html('Attendi...')
+
+        setTimeout(function(){
+            window.location.replace('../php/index.php');
+        }, 2000);
+    });
 })
 
 let hideShowPass = el => {
