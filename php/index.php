@@ -2,6 +2,14 @@
     session_start();
     //Salvo sulla session la pagina corrente cosi da poterci tornare in caso di login da tale pagina
     $_SESSION['currentPage'] = 'index.php';
+
+    unset($_SESSION['sessionAuto']);
+
+    echo '<pre>';
+    var_dump($_SESSION);
+    echo '</pre>'
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,41 +61,66 @@
                     <div class="row nav-footer mt-3 border border-0 border-top border-secondary">
                         <div class="col-lg-3 btn-group mt-2">
                             <?php
-                                //Post Registrazione
-                                if(isset($_SESSION['errorReg'])){
-                                    destroySessionAndGoBack($_SESSION['errorReg']);
-                                    unset($_SESSION['errorReg']);
-                                } else if(isset($_SESSION['successReg'])){
-                                    destroySessionAndGoBack($_SESSION['successReg']);
-                                    unset($_SESSION['successReg']);
-                                }
-                                //Post Login
-                                if(isset($_SESSION['errorLogin'])){
-                                    destroySessionAndGoBack($_SESSION['errorLogin']);
-                                    unset($_SESSION['errorLogin']);
-                                } else if(isset($_SESSION['successLogin'])){
-                                    echo '<script>alert("'.$_SESSION['successLogin'].'");</script>';
-                                    unset($_SESSION['successLogin']);
-                                }
-                                //Post Ordine
-                                if(isset($_SESSION['orderOK'])){
-                                    echo '<script>alert("'. $_SESSION['orderOK'] .'");</script>';
-                                    unset($_SESSION['orderOK']);
-                                } else if(isset($_SESSION['orderError'])){
-                                    echo '<script>alert("'.$_SESSION['orderError'].'");</script>';
-                                    unset($_SESSION['orderError']);
-                                }
-                                
-                                if(!isset($_SESSION['user'])){
+                                if(!isset($_SESSION["user"])){
                                     echo '<button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>';
                                     echo '<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>';
                                 } else {
                                     echo '<a class="btn btn-outline-danger" href="logout.php">Logout</a>';
                                 }
+
+                                //Post Registrazione
+                                if(isset($_SESSION["errorReg"])){
+                                    destroySessionAndGoBack($_SESSION["errorReg"]);
+                                    unset($_SESSION["errorReg"]);
+                                } else if(isset($_SESSION["successReg"])){
+                                    destroySessionAndGoBack($_SESSION["successReg"]);
+                                    unset($_SESSION["successReg"]);
+                                }
+                                //Post Login
+                                if(isset($_SESSION["errorLogin"])){
+                                    destroySessionAndGoBack($_SESSION["errorLogin"]);
+                                    unset($_SESSION["errorLogin"]);
+                                } else if(isset($_SESSION['successLogin'])){
+                                    echo $_SESSION['successLogin'];
+                                    unset($_SESSION["successLogin"]);
+                                }
                             ?>
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal Msg -->
+                <?php
+                    if($_SESSION["orderOK"] || $_SESSION["orderError"]){
+                        echo '<div class="modal" id="msgModal" tabindex="-1">';
+                            echo '<div class="modal-dialog">';
+                                echo '<div class="modal-content">';
+                                    echo '<div class="modal-header">';
+                                        echo '<h5 class="modal-title">';
+                                        
+                                        if($_SESSION["orderOK"]) echo 'Conferma Ordine';
+                                        if($_SESSION['orderError']) echo 'Errore!';
+
+                                        echo '</h5>';
+                                        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+                                    echo '</div>';
+                                    echo '<div class="modal-body">';
+                                        //Post Ordine
+                                        if(isset($_SESSION["orderOK"])){
+                                            echo $_SESSION['orderOK'] ;
+                                            unset($_SESSION["orderOK"]);
+                                        } else if(isset($_SESSION["orderError"])){
+                                            echo $_SESSION['orderError'];
+                                            unset($_SESSION["orderError"]);
+                                        }
+                                    echo '</div>';
+                                echo '</div>';
+                            echo '</div>';
+                        echo '</div>';
+                    }
+
+                    
+                ?>
 
                 <!-- Modal Sign Up --> 
                 <div class="modal fade text-dark" id="signUpModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">

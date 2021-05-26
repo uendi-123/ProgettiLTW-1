@@ -4,25 +4,22 @@
 
     if(isset($_SESSION["sessionAuto"][$marchioNome])){
         $autoValue = $_SESSION["sessionAuto"][$marchioNome];
-
-        $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error()); 
-        $values = array("iduser" => $_SESSION["user"]["idUser"], "idcar" => $autoValue["idcar"], "citta" => $_SESSION["cittaNoleggio"], "datada" => NULL, "dataa" => NULL);
-        
-        printf(json_encode($values));
-        if(pg_insert($db, "ordini", $values)){
-            $_SESSION["orderOK"] = "Grazie per averci scelto, ordine confermato: \\n
-                utente:" . $_SESSION["user"]["nome"] . " " . $_SESSION["user"]["cognome"] . "\\n
-                auto: " . $autoValue["marchio"] . " " . $autoValue["nome"] . "\\n
-                citta: " . $_SESSION["cittaNoleggio"] . "\\n
-                Inizio Noleggio: " . $_SESSION["dataDa"] . "\\n
-                Fine Noleggio: " . $_SESSION["dataA"];
+        //Connetto al DB, se errore chiama die(...)
+        $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error());
+        //Esegue la query
+        $result = pg_query($db, "insert into ordini(iduser, idcar, citta, datada, dataa)
+                       values(". $_SESSION["user"]["idUser"] .", ". $autoValue["idcar"] .", '". $_SESSION["cittaNoleggio"] ."', '". $_SESSION["dataDa"] ."', '". $_SESSION["dataA"] ."');");
+        //Controlla che l'esecuzione della query sia andata a buon fine, altrimenti orderError sara mostrato.
+        if($result){
+            $_SESSION["orderError"] = "Qualcosa e' andato storto, ordine non inserito!";
+            //$_SESSION["orderOK"] = "Grazie per averci scelto, ordine confermato:\nutente:" . $_SESSION["user"]["nome"] . " " . $_SESSION["user"]["cognome"] . "\nauto: " . $autoValue["marchio"] . " " . $autoValue["nome"] . "\ncitta: " . $_SESSION["cittaNoleggio"] . "\nInizio Noleggio: " . $_SESSION["dataDa"] . "\nFine Noleggio: " . $_SESSION["dataA"];
         } else {
             $_SESSION["orderError"] = "Qualcosa e' andato storto, ordine non inserito!";
         }
     } else {
         // Dovrei mettere un msg di errore
         $_SESSION["orderError"] = "Qualcosa e' andato storto, ordine non inserito! " . 
-        json_encode($_SESSION["sessionAuto"][$marchioNome]) . "marchio: " . $marchio . " nome: " . $nome;
+json_encode($_SESSION["sessionAuto"][$marchioNome]) . "marchio: " . $marchio . " nome: " . $nome;
     }
     pg_close($db);
     session_write_close();
