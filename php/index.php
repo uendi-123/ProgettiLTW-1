@@ -6,9 +6,9 @@
     if(isset($_SESSION['sessionAuto'])) unset($_SESSION['sessionAuto']);
 
     //Stampa la var $_SESSION (debug purpose)
-    echo '<pre>';
-    var_dump($_SESSION);
-    echo '</pre>';
+    // echo '<pre>';
+    // var_dump($_SESSION);
+    // echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -104,15 +104,20 @@
                                             <div class="card-body">
                                                 <h5 class="card-title border-1 border-bottom">
                                                     <?php 
-                                                        echo "<p>" . $_SESSION['user']['nome'] . " " . $_SESSION['user']['cognome'] . "</p>";
+                                                        if(isset($_SESSION['user'])){
+                                                            echo "<p>" . $_SESSION['user']['nome'] . " " . $_SESSION['user']['cognome'] . "</p>";
+                                                        }   
+                                                        
                                                     ?>
                                                 </h5>
                                                 <p class="card-text">
                                                     <?php 
-                                                        echo "
+                                                        if(isset($_SESSION['user'])){
+                                                            echo "
                                                             <b>Indirizzo: </b>" . $_SESSION['user']['indirizzo'] . " " . $_SESSION['user']['civico'] ." </br>
                                                             <b>Data di Nascita: </b>" . $_SESSION['user']['datanascita'] . " </br>
                                                             <b>Email: </b>" . $_SESSION['user']['email'];
+                                                        }
                                                     ?>
                                                 </p>
                                             </div>
@@ -135,33 +140,35 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error());
-                                            
-                                            $query = "SELECT idcar, citta, datada, dataa 
-                                                    FROM ordini
-                                                    WHERE iduser = ". $_SESSION['user']['idUser'];
-                                            
-                                            $resultOrdine = pg_query($db, $query);
+                                            if(isset($_SESSION['user'])){
+                                                $db = pg_connect("host=localhost port=5432 dbname=userDB user=postgres password=password") or die("Could not connect: " . pg_last_error());
+                                                
+                                                $query = "SELECT idcar, citta, datada, dataa 
+                                                        FROM ordini
+                                                        WHERE iduser = ". $_SESSION['user']['idUser'];
+                                                
+                                                $resultOrdine = pg_query($db, $query);
 
-                                            if(pg_num_rows($resultOrdine) > 0){
-                                                for($i = 0; $i < pg_num_rows($resultOrdine); $i++){
-                                                    $curResult = pg_fetch_row($resultOrdine);
-                                                    $query = "SELECT marchio, nome 
-                                                        FROM auto
-                                                        WHERE id =" . $curResult[0];
+                                                if(pg_num_rows($resultOrdine) > 0){
+                                                    for($i = 0; $i < pg_num_rows($resultOrdine); $i++){
+                                                        $curResult = pg_fetch_row($resultOrdine);
+                                                        $query = "SELECT marchio, nome 
+                                                            FROM auto
+                                                            WHERE id =" . $curResult[0];
 
-                                                    $auto = pg_fetch_row(pg_query($db, $query));
+                                                        $auto = pg_fetch_row(pg_query($db, $query));
 
-                                                    echo "<tr>";
-                                                    echo "<th scope='row'>" . $i+1 ."</th>";
-                                                    echo "<td>" . $auto[0] . " " . $auto[1] . "</td>";
-                                                    echo "<td>" . $curResult[1] ."</td>";
-                                                    echo "<td>" . $curResult[2] . "</td>";
-                                                    echo "<td>" . $curResult[3] . "</td>";
-                                                    echo "</tr>";
+                                                        echo "<tr>";
+                                                        echo "<th scope='row'>" . $i+1 ."</th>";
+                                                        echo "<td>" . $auto[0] . " " . $auto[1] . "</td>";
+                                                        echo "<td>" . $curResult[1] ."</td>";
+                                                        echo "<td>" . $curResult[2] . "</td>";
+                                                        echo "<td>" . $curResult[3] . "</td>";
+                                                        echo "</tr>";
+                                                    }
                                                 }
+                                                pg_close($db);
                                             }
-                                            pg_close($db);
                                         ?>
                                     </tbody>
                                 </table>
@@ -170,7 +177,7 @@
                     </div>
                 </div>
 
-                <?php 
+                <?php
                     if(isset($_SESSION['orderOK']) || isset($_SESSION['orderError'])){
                         echo "<script>
                             $(document).ready(function(){
