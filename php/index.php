@@ -395,7 +395,7 @@
                                 </div>
                             </div>
                             <div class='col-lg-5 col-md-6 col-sm-6'>
-                                <div class="input-group mb-3">
+                                <div class="input-group">
                                     <input id="dateEnd" type="text" name="dataA" class="form-control date" placeholder="Data fine noleggio" aria-label="Data fine noleggio" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-secondary rounded-0 rounded-end input-group-text" type="button" id="calendarIconEnd">
@@ -405,8 +405,9 @@
                                         </button>
                                     </div>
                                 </div>
+                                <div id="errorDateDiv" class="text-danger" hidden='true'>Inserire periodo coerente!</div>
                             </div>
-                            <div class="col-lg-2 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-12 col-md-12 mt-2">
                                 <button id='noleggioSubmitBtn' class="btn btn-success btnToSpread" type="submit" disabled>Cerca</button>
                             </div>
                         </div>

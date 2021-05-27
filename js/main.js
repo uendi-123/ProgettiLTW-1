@@ -149,7 +149,12 @@ $(document).ready(function(){
     InputToCheckNoleggio.each(function(){
         var check = true;
         $(this).change(function(){
-            if($(this).val().length > 0){
+            if($(this).attr('id') == 'dateEnd' || $(this).attr('id') == 'dateStart'){
+
+                //Controllo che nessuno delle 2 date sia vuoto e che dateEnd sia sempre maggiore di dateStart
+                check = checkDate($('#dateEnd'), $('#dateStart'));
+
+            } else if($(this).val().length > 0){
                 if($(this).hasClass('is-invalid')){
                     $(this).removeClass('is-invalid');
                 }
@@ -162,7 +167,52 @@ $(document).ready(function(){
                 $(this).addClass('is-invalid');
                 check = false;
             }
-            invalidButton('#noleggioSubmitBtn', check);
+            invalidButton('#noleggioSubmitBtn', InputToCheckNoleggio, true);
+        })
+    })
+
+    var InputToCheckCreditCard = $('#creditCardForm input');
+    InputToCheckCreditCard.each(function(){
+        $(this).change(function(){
+            if($(this).attr('id') == 'inputName'){
+
+                if($(this).val().length > 4){
+                    if($(this).hasClass('is-invalid')) $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
+                } else {
+                    if($(this).hasClass('is-valid')) $(this).removeClass('is-valid');
+                    $(this).addClass('is-invalid');
+                }
+            } else if($(this).attr('id') == 'inputNumber'){
+
+                if($(this).val().length == 19){
+                    if($(this).hasClass('is-invalid')) $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
+                } else {
+                    if($(this).hasClass('is-valid')) $(this).removeClass('is-valid');
+                    $(this).addClass('is-invalid');
+                }
+            } else if($(this).attr('id') == 'inputExpiry'){
+
+                if($(this).val().length == 7 || $(this).val().length == 9){
+                    if($(this).hasClass('is-invalid')) $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
+                } else {
+                    if($(this).hasClass('is-valid')) $(this).removeClass('is-valid');
+                    $(this).addClass('is-invalid');
+                }
+            } else if($(this).attr('id') == 'inputCVC'){
+
+                if($(this).val().length > 2){
+                    if($(this).hasClass('is-invalid')) $(this).removeClass('is-invalid');
+                    $(this).addClass('is-valid');
+                } else {
+                    if($(this).hasClass('is-valid')) $(this).removeClass('is-valid');
+                    $(this).addClass('is-invalid');
+                }
+            }
+
+            invalidButton('#pagaBtn', InputToCheckCreditCard, true);
         })
     })
 
@@ -257,11 +307,12 @@ let checkSubmitSignUp = () => {
     return check;
 }
 //Disabilita il Btn cerca fin quando tutti gli input (Citta, DataInizioNoleggio, DataFineNoleggio) non sono validi, cioe con length > 0
-let invalidButton = (el, check) => {
-    var InputToCheckNoleggio = $('#noleggioForm input');
+let invalidButton = (el, InputToCheck, check) => {
 
-    InputToCheckNoleggio.each(function(){
-        if($(this).val().length < 1){
+    InputToCheck.each(function(){
+        // Debug Purpose
+        // console.log($(this).attr('id') + ': ' + $(this).val().length)
+        if($(this).hasClass('is-invalid') || $(this).val().length < 1){
             check = false;
         }
     })
@@ -273,3 +324,33 @@ let invalidButton = (el, check) => {
     }
 }
 
+let checkDate = (divToCheck, divCompare) => {
+    var dCheck = new Date(divToCheck.val());
+    var dCompare = new Date(divCompare.val());
+
+    if(!divCompare.val() || !divToCheck.val() || dCheck < dCompare){
+        if(divToCheck.hasClass('is-valid')) divToCheck.removeClass('is-valid');
+        divToCheck.addClass('is-invalid');
+
+        if(divCompare.hasClass('is-valid')) divCompare.removeClass('is-valid');
+        divCompare.addClass('is-invalid');
+        
+        check = false;
+        $('#errorDateDiv').attr('hidden', false);
+    } else {
+        if(divToCheck.hasClass('is-invalid')) divToCheck.removeClass('is-invalid');
+        divToCheck.addClass('is-valid');
+
+        if(divCompare.hasClass('is-invalid')) divCompare.removeClass('is-invalid');
+        divCompare.addClass('is-valid');
+
+        check = true;
+        $('#errorDateDiv').attr('hidden', true);
+    }
+
+    return check;
+}
+
+let checkCreditcard = () => {
+
+}
