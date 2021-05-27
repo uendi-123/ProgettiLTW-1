@@ -5,11 +5,10 @@
 
     unset($_SESSION['sessionAuto']);
 
-    echo '<pre>';
-    var_dump($_SESSION);
-    echo '</pre>'
-
-
+    //Stampa la var $_SESSION (debug purpose)
+    // echo '<pre>';
+    // var_dump($_SESSION);
+    // echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -39,12 +38,40 @@
     <body class="bg-dark text-light">
         <!-- NavBar -->
         <nav class="navbar navbar-dark bg-dark border border-0 border-bottom border-3 border-light">
-            <div class="container-fluid">
-                <a class="navbar-brand fs-2 logo" href="index.php">RentACar.com</a>
-
-                <button class="btn btn-outline-secondary navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+            <div class="container-fluid pe-2">
+                <a class="navbar-brand fs-2 logo text-center mx-0 px-0" href="index.php">RentACar.com</a>
+                <!-- <div class="col-auto"></div>
+                <div class="col-auto"> -->
+                    <div class="justify-content-end d-inline-flex btn-group me-1">
+                        <?php
+                            if(!isset($_SESSION["user"])){
+                                echo '<button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>';
+                                echo '<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>';
+                            } else {
+                                echo '<a class="btn btn-outline-danger" href="logout.php">Logout</a>';
+                            }
+                            //Post Registrazione
+                            if(isset($_SESSION["errorReg"])){
+                                destroySessionAndGoBack($_SESSION["errorReg"]);
+                                unset($_SESSION["errorReg"]);
+                            } else if(isset($_SESSION["successReg"])){
+                                destroySessionAndGoBack($_SESSION["successReg"]);
+                                unset($_SESSION["successReg"]);
+                            }
+                            //Post Login
+                            if(isset($_SESSION["errorLogin"])){
+                                destroySessionAndGoBack($_SESSION["errorLogin"]);
+                                unset($_SESSION["errorLogin"]);
+                            } else if(isset($_SESSION['successLogin'])){
+                                echo "<script>alert('" . $_SESSION['successLogin'] . "')</script>";
+                                unset($_SESSION["successLogin"]);
+                            }
+                        ?>
+                    <!-- </div> -->
+                    <button class="btn btn-outline-secondary navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
 
                 <!-- Parte collapse della NavBar -->
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -57,70 +84,54 @@
                             <a class="nav-link" href="#">Il mio profilo</a>
                         </li>
                     </ul>
+                </div>
 
-                    <div class="row nav-footer mt-3 border border-0 border-top border-secondary">
-                        <div class="col-lg-3 btn-group mt-2">
-                            <?php
-                                if(!isset($_SESSION["user"])){
-                                    echo '<button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>';
-                                    echo '<button class="btn btn-outline-success" type="button" data-bs-toggle="modal" data-bs-target="#signInModal">Sign in</button>';
-                                } else {
-                                    echo '<a class="btn btn-outline-danger" href="logout.php">Logout</a>';
-                                }
-
-                                //Post Registrazione
-                                if(isset($_SESSION["errorReg"])){
-                                    destroySessionAndGoBack($_SESSION["errorReg"]);
-                                    unset($_SESSION["errorReg"]);
-                                } else if(isset($_SESSION["successReg"])){
-                                    destroySessionAndGoBack($_SESSION["successReg"]);
-                                    unset($_SESSION["successReg"]);
-                                }
-                                //Post Login
-                                if(isset($_SESSION["errorLogin"])){
-                                    destroySessionAndGoBack($_SESSION["errorLogin"]);
-                                    unset($_SESSION["errorLogin"]);
-                                } else if(isset($_SESSION['successLogin'])){
-                                    echo $_SESSION['successLogin'];
-                                    unset($_SESSION["successLogin"]);
-                                }
-                            ?>
+                <?php 
+                    if(isset($_SESSION['orderOK']) || isset($_SESSION['orderError'])){
+                        if(isset($_SESSION['orderOK'])){
+                            echo "<script>
+                                $(document).ready(function(){
+                                    $('#msgModal').modal('show');
+                                });
+                              </script>";
+                        } else if(isset($_SESSION['orderError'])){
+                            echo "<script>
+                                $(document).ready(function(){
+                                    $('#msgModal').modal('show');
+                                });
+                              </script>";
+                        }
+                        
+                    }
+                ?>
+                <!-- Modal Msg -->
+                <div class="modal" id="msgModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">
+                                <?php 
+                                    if(isset($_SESSION["orderOK"])) echo '<p class="mx-0 text-success">Conferma Ordine</p>';
+                                    if(isset($_SESSION["orderError"])) echo '<p class="mx-0 text-danger">Errore!</p>';
+                                ?>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-dark">
+                                <?php 
+                                    //Post Ordine
+                                    if(isset($_SESSION["orderOK"])){
+                                        echo $_SESSION['orderOK'];
+                                        unset($_SESSION["orderOK"]);
+                                    } else if(isset($_SESSION["orderError"])){
+                                        echo $_SESSION['orderError'];
+                                        unset($_SESSION["orderError"]);
+                                    }
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Modal Msg -->
-                <?php
-                    if($_SESSION["orderOK"] || $_SESSION["orderError"]){
-                        echo '<div class="modal" id="msgModal" tabindex="-1">';
-                            echo '<div class="modal-dialog">';
-                                echo '<div class="modal-content">';
-                                    echo '<div class="modal-header">';
-                                        echo '<h5 class="modal-title">';
-                                        
-                                        if($_SESSION["orderOK"]) echo 'Conferma Ordine';
-                                        if($_SESSION['orderError']) echo 'Errore!';
-
-                                        echo '</h5>';
-                                        echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
-                                    echo '</div>';
-                                    echo '<div class="modal-body">';
-                                        //Post Ordine
-                                        if(isset($_SESSION["orderOK"])){
-                                            echo $_SESSION['orderOK'] ;
-                                            unset($_SESSION["orderOK"]);
-                                        } else if(isset($_SESSION["orderError"])){
-                                            echo $_SESSION['orderError'];
-                                            unset($_SESSION["orderError"]);
-                                        }
-                                    echo '</div>';
-                                echo '</div>';
-                            echo '</div>';
-                        echo '</div>';
-                    }
-
-                    
-                ?>
 
                 <!-- Modal Sign Up --> 
                 <div class="modal fade text-dark" id="signUpModal" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -299,6 +310,9 @@
                                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                                         </svg>
                                     </button>
+                                </div>
+                                <div class="invalid-feedback">
+                                    Immettere periodo di tempo coerente!
                                 </div>
                             </div>
                             <div class='col-lg-5 col-md-6 col-sm-6'>

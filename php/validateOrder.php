@@ -11,8 +11,13 @@
                        values(". $_SESSION["user"]["idUser"] .", ". $autoValue["idcar"] .", '". $_SESSION["cittaNoleggio"] ."', '". $_SESSION["dataDa"] ."', '". $_SESSION["dataA"] ."');");
         //Controlla che l'esecuzione della query sia andata a buon fine, altrimenti orderError sara mostrato.
         if($result){
-            $_SESSION["orderError"] = "Qualcosa e' andato storto, ordine non inserito!";
-            //$_SESSION["orderOK"] = "Grazie per averci scelto, ordine confermato:\nutente:" . $_SESSION["user"]["nome"] . " " . $_SESSION["user"]["cognome"] . "\nauto: " . $autoValue["marchio"] . " " . $autoValue["nome"] . "\ncitta: " . $_SESSION["cittaNoleggio"] . "\nInizio Noleggio: " . $_SESSION["dataDa"] . "\nFine Noleggio: " . $_SESSION["dataA"];
+            $_SESSION["orderOK"] = "Grazie per averci scelto, ordine confermato: </br>
+            <b>Utente</b>: " . $_SESSION["user"]["nome"] . " " . $_SESSION["user"]["cognome"] . " </br>
+            <b>Auto</b>: " . $autoValue["marchio"] . " " . $autoValue["nome"] . " </br>
+            <b>Citta</b>: " . $_SESSION["cittaNoleggio"] . " </br>
+            <b>Inizio Noleggio</b>: " . $_SESSION["dataDa"] . " </br>
+            <b>Fine Noleggio</b>: " . $_SESSION["dataA"] . " </br>
+            <p class='px-0 mx-0 mt-2'>Troverai questo resoconto nella tua sezione 'I miei Ordini' nella NavBar.</p>"; 
         } else {
             $_SESSION["orderError"] = "Qualcosa e' andato storto, ordine non inserito!";
         }
