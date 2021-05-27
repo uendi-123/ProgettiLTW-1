@@ -17,7 +17,7 @@
             <b>Citta</b>: " . $_SESSION["cittaNoleggio"] . " </br>
             <b>Inizio Noleggio</b>: " . $_SESSION["dataDa"] . " </br>
             <b>Fine Noleggio</b>: " . $_SESSION["dataA"] . " </br>
-            <p class='px-0 mx-0 mt-2'>Troverai questo resoconto nella tua sezione 'I miei Ordini' nella NavBar.</p>"; 
+            <p class='px-0 mt-2 mb-0'>Troverai questo resoconto nella tua sezione 'I miei Ordini' nella NavBar.</p>"; 
         } else {
             $_SESSION["orderError"] = "Qualcosa e' andato storto, ordine non inserito!";
         }
